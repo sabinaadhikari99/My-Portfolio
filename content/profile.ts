@@ -165,23 +165,53 @@ export const projects: Project[] = [
     image: "/projects/skillsync.png",
   },
   {
-    name: "Multi-Vendor Inventory Management API",
-    year: "2025",
+    name: "Online Pharmacy",
+    year: "2026",
     summary:
-      "A production-ready multi-tenant backend where each vendor runs a fully isolated store, customers shop across stores, and platform admins manage the vendors.",
+      "An online pharmacy storefront for browsing and ordering medicines, supplements, skincare, baby care products and health devices across Nepal.",
     problem:
-      "Multi-vendor commerce needs strict data isolation without a database per tenant. Every request carries a tenant slug, and the permission layer guarantees one vendor can never read another's products, stock or orders.",
+      "Customers need a clear way to find genuine health products, understand delivery and payment options, and manage orders from one dependable storefront.",
     features: [
-      "Shared-database multi-tenancy with per-tenant isolation via an X-Tenant-Slug header",
-      "Role-based access control across platform admin, vendor admin, employee and customer",
-      "Multi-warehouse inventory, with stock routed to the warehouse nearest the delivery city",
-      "JWT authentication with token blacklisting on logout, plus Google OAuth 2.0 sign-in",
-      "Orders, coupons, reviews, wishlists, notifications and reporting endpoints",
-      "Swagger and ReDoc API documentation",
+      "Product browsing by medicine, supplement, skincare and personal-care categories",
+      "Product search, pricing and stock availability for everyday health products",
+      "Customer accounts with orders, wishlist, reviews and notifications",
+      "eSewa, Khalti and cash-on-delivery payment options",
+      "Delivery information and prescription guidance for regulated medicines",
     ],
-    tech: ["Django", "Django REST Framework", "PostgreSQL", "SimpleJWT", "Docker", "Railway"],
-    github: undefined,
-    demo: "https://inventory-management-api-production.up.railway.app",
+    tech: ["Next.js", "E-commerce", "Nepal delivery", "eSewa", "Khalti"],
+    demo: "https://pharmafrontend.neptechpal.com.np/",
+  },
+  {
+    name: "Prakritik Ayurveda Spa",
+    year: "2026",
+    summary:
+      "A wellness website for a Pokhara Ayurvedic spa, helping visitors discover traditional therapies, packages and a clear path to booking an appointment.",
+    problem:
+      "Wellness treatments can be difficult to compare online. Visitors need practical information about each therapy, who it suits, what it includes and how to book.",
+    features: [
+      "Therapy catalogue covering Ayurvedic massage, Shirodhara, Panchakarma and recovery treatments",
+      "Treatment packages with schedules, inclusions and pricing context",
+      "Editorial content that helps visitors choose the right therapy",
+      "Appointment booking, WhatsApp contact and location details for Lakeside, Pokhara",
+    ],
+    tech: ["Next.js", "Content-driven UI", "Booking flow", "Responsive design"],
+    demo: "https://prakritikayurvedicspa.com/",
+  },
+  {
+    name: "Office Management System",
+    year: "2026",
+    summary:
+      "A secure office management dashboard for authenticated teams to access and manage day-to-day operational workflows.",
+    problem:
+      "Internal operations need a focused workspace where authorized staff can sign in and work with company information without exposing it through a public-facing site.",
+    features: [
+      "Dedicated sign-in experience for office users",
+      "Protected dashboard entry point for authenticated workflows",
+      "Password recovery link for account access support",
+      "Focused internal-tool interface separate from the public marketing site",
+    ],
+    tech: ["Web application", "Authentication", "Dashboard UI", "Role-based workflows"],
+    demo: "https://oms.neptechpal.com.np/dashboard",
   },
 ];
 

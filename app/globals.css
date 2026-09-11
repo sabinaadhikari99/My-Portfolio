@@ -3,9 +3,9 @@
 /* ---------------------------------------------------------------------------
    Design tokens — the single source of truth for colour.
 
-   One light system: a very light cool-neutral ground, near-black type, a
-   softer grey for secondary copy, and exactly one accent (a restrained
-   professional blue) carrying every link, button, badge, icon, focus ring and
+  One light system: a very light lavender ground, deep plum type, a
+  softer violet for secondary copy, and exactly one accent (a restrained
+  violet) carrying every link, button, badge, icon, focus ring and
    active state. Nothing outside this block defines a colour.
 
    Every foreground/background pairing below is verified at WCAG AA (4.5:1);
@@ -13,38 +13,38 @@
 --------------------------------------------------------------------------- */
 :root {
   /* Ground and surfaces */
-  --background: #f7f8fa;
+  --background: #fbf8ff;
   --card: #ffffff;
-  --muted: #eff2f6;
-  --secondary: #f1f4f9;
+  --muted: #f1ebf8;
+  --secondary: #f6f0fb;
 
   /* Type, darkest to lightest. Four tiers, because the layout relies on the
      hierarchy: headings, body copy, secondary copy, then small labels. */
-  --foreground: #15171c;
-  --card-foreground: #15171c;
-  --foreground-muted: #3a404b;
-  --muted-foreground: #565d6a;
-  --subtle: #676d7b;
+  --foreground: #211b2b;
+  --card-foreground: #211b2b;
+  --foreground-muted: #43394e;
+  --muted-foreground: #655a70;
+  --subtle: #766a82;
 
   /* Hairlines. Deliberately low-contrast — structure, not decoration. */
-  --border: #e5e8ee;
-  --border-strong: #d2d7e0;
+  --border: #e8def0;
+  --border-strong: #d8c9e3;
 
   /* The one accent. `primary` is the solid; `accent` is its tint. */
-  --primary: #0b62d6;
-  --primary-hover: #0950ae;
+  --primary: #7650b5;
+  --primary-hover: #5f3c96;
   --primary-foreground: #ffffff;
-  --accent: #e9f1fd;
-  --accent-foreground: #08468f;
+  --accent: #eee4fb;
+  --accent-foreground: #5a378d;
 
   /* Language-bar segments: one hue, stepped in lightness, so a six-part chart
      never introduces a colour that is not the accent. */
-  --chart-1: #0b62d6;
-  --chart-2: #3d81de;
-  --chart-3: #6ba0e7;
-  --chart-4: #9abfef;
-  --chart-5: #c3d8f6;
-  --chart-6: #dfe9f9;
+  --chart-1: #7650b5;
+  --chart-2: #9272c5;
+  --chart-3: #aa8ed2;
+  --chart-4: #c2ace0;
+  --chart-5: #d8c9ed;
+  --chart-6: #ebe3f7;
 }
 
 @theme inline {
