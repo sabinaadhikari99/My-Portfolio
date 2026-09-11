@@ -1,21 +1,75 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Design tokens
-   A light, warm, editorial palette. One accent, used sparingly.
---------------------------------------------------------------------------- */
-@theme {
-  --color-paper: #fbfaf8;
-  --color-surface: #ffffff;
-  --color-ink: #17161a;
-  --color-graphite: #3f3d44;
-  --color-muted: #6f6c75;
-  --color-faint: #9c99a2;
-  --color-line: #e7e4de;
-  --color-line-strong: #d8d4cc;
-  --color-accent: #a4552f;
-  --color-accent-soft: #f4ece6;
+   Design tokens — the single source of truth for colour.
 
+   One light system: a very light cool-neutral ground, near-black type, a
+   softer grey for secondary copy, and exactly one accent (a restrained
+   professional blue) carrying every link, button, badge, icon, focus ring and
+   active state. Nothing outside this block defines a colour.
+
+   Every foreground/background pairing below is verified at WCAG AA (4.5:1);
+   the weakest is the label tier at 4.62:1 on the muted surface.
+--------------------------------------------------------------------------- */
+:root {
+  /* Ground and surfaces */
+  --background: #f7f8fa;
+  --card: #ffffff;
+  --muted: #eff2f6;
+  --secondary: #f1f4f9;
+
+  /* Type, darkest to lightest. Four tiers, because the layout relies on the
+     hierarchy: headings, body copy, secondary copy, then small labels. */
+  --foreground: #15171c;
+  --card-foreground: #15171c;
+  --foreground-muted: #3a404b;
+  --muted-foreground: #565d6a;
+  --subtle: #676d7b;
+
+  /* Hairlines. Deliberately low-contrast — structure, not decoration. */
+  --border: #e5e8ee;
+  --border-strong: #d2d7e0;
+
+  /* The one accent. `primary` is the solid; `accent` is its tint. */
+  --primary: #0b62d6;
+  --primary-hover: #0950ae;
+  --primary-foreground: #ffffff;
+  --accent: #e9f1fd;
+  --accent-foreground: #08468f;
+
+  /* Language-bar segments: one hue, stepped in lightness, so a six-part chart
+     never introduces a colour that is not the accent. */
+  --chart-1: #0b62d6;
+  --chart-2: #3d81de;
+  --chart-3: #6ba0e7;
+  --chart-4: #9abfef;
+  --chart-5: #c3d8f6;
+  --chart-6: #dfe9f9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-secondary: var(--secondary);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle: var(--subtle);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+}
+
+@theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-display: var(--font-serif), Georgia, "Times New Roman", serif;
@@ -39,11 +93,14 @@ html {
   /* Offset for the fixed header when jumping to a section anchor. */
   scroll-padding-top: 5.5rem;
   -webkit-text-size-adjust: 100%;
+  /* Firefox scrollbar. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) var(--background);
 }
 
 body {
-  background-color: var(--color-paper);
-  color: var(--color-ink);
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-sans);
   font-synthesis-weight: none;
   text-rendering: optimizeLegibility;
@@ -53,14 +110,52 @@ body {
 }
 
 ::selection {
-  background-color: var(--color-accent);
-  color: #fff;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--primary);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* WebKit/Blink scrollbar, matched to the same hairline tokens. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border: 2px solid var(--background);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* Form controls inherit the system rather than the user agent's blue. */
+::placeholder {
+  color: var(--subtle);
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+textarea {
+  accent-color: var(--primary);
 }
 
 /* ---------------------------------------------------------------------------
@@ -85,7 +180,7 @@ body {
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-faint);
+  color: var(--subtle);
 }
 
 /* Underline that grows from the left on hover — used on text links. */
@@ -150,5 +245,69 @@ body {
   [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Print
+   The /resume page doubles as the downloadable PDF: "Download PDF" just opens
+   the browser's print dialog, so what prints has to stand on its own without
+   the site chrome around it.
+--------------------------------------------------------------------------- */
+@page {
+  margin: 14mm 14mm;
+}
+
+@media print {
+  .no-print,
+  header[class*="fixed"],
+  footer {
+    display: none !important;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    overflow: visible !important;
+  }
+
+  .resume-sheet {
+    padding: 0 !important;
+    background: #fff !important;
+    font-size: 10.5pt;
+  }
+
+  .resume-sheet .shell,
+  .resume-sheet > div {
+    max-width: none !important;
+    padding-inline: 0 !important;
+  }
+
+  /* Keep a heading with the entries it introduces, and never split an entry. */
+  .resume-block {
+    break-inside: avoid-page;
+    margin-top: 1.4rem !important;
+  }
+
+  .resume-block h2 {
+    break-after: avoid-page;
+  }
+
+  .resume-item {
+    break-inside: avoid-page;
+  }
+
+  /* Print the destination of every link — a PDF has no hover. */
+  .resume-sheet a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    color: var(--muted-foreground);
+    word-break: break-all;
+  }
+
+  /* …except the contact row and photo, where it would be noise. */
+  .resume-sheet header a[href^="http"]::after {
+    content: "";
   }
 }

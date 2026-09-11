@@ -4,7 +4,7 @@ import Section from "./Section";
 
 function Timeline({ items }: { items: TimelineItem[] }) {
   return (
-    <ol className="relative border-l border-line">
+    <ol className="relative border-l border-border">
       {items.map((item, i) => (
         <Reveal
           as="li"
@@ -14,14 +14,14 @@ function Timeline({ items }: { items: TimelineItem[] }) {
         >
           <span
             aria-hidden
-            className="absolute -left-[4.5px] top-2 h-2 w-2 rounded-full bg-accent"
+            className="absolute -left-[4.5px] top-2 h-2 w-2 rounded-full bg-primary"
           />
           <p className="eyebrow">{item.period}</p>
-          <h4 className="mt-2 text-xl text-ink md:text-2xl">{item.title}</h4>
-          <p className="mt-1 text-base text-graphite">
+          <h4 className="mt-2 text-xl text-foreground md:text-2xl">{item.title}</h4>
+          <p className="mt-1 text-base text-foreground-muted">
             {item.org}
             {item.meta ? (
-              <span className="text-faint"> · {item.meta}</span>
+              <span className="text-subtle"> · {item.meta}</span>
             ) : null}
           </p>
           {item.points.length ? (
@@ -29,9 +29,9 @@ function Timeline({ items }: { items: TimelineItem[] }) {
               {item.points.map((point) => (
                 <li
                   key={point}
-                  className="flex gap-3 text-[0.95rem] leading-relaxed text-muted"
+                  className="flex gap-3 text-[0.95rem] leading-relaxed text-muted-foreground"
                 >
-                  <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-line-strong" />
+                  <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-border-strong" />
                   {point}
                 </li>
               ))}
@@ -54,13 +54,13 @@ export default function Experience() {
       <div className="grid gap-14 md:grid-cols-2 md:gap-20">
         {experience.length ? (
           <div>
-            <h3 className="mb-8 font-display text-2xl text-ink">Experience</h3>
+            <h3 className="mb-8 font-display text-2xl text-foreground">Experience</h3>
             <Timeline items={experience} />
           </div>
         ) : null}
         {education.length ? (
           <div>
-            <h3 className="mb-8 font-display text-2xl text-ink">Education</h3>
+            <h3 className="mb-8 font-display text-2xl text-foreground">Education</h3>
             <Timeline items={education} />
           </div>
         ) : null}

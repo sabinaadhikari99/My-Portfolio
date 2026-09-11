@@ -30,7 +30,7 @@ export default function Section({
       aria-labelledby={`${id}-heading`}
       className={
         surface
-          ? "border-y border-line bg-surface py-24 md:py-32"
+          ? "border-y border-border bg-card py-24 md:py-32"
           : "py-24 md:py-32"
       }
     >
@@ -39,12 +39,12 @@ export default function Section({
           <p className="eyebrow">{eyebrow}</p>
           <h2
             id={`${id}-heading`}
-            className="mt-4 font-display text-h2 text-ink"
+            className="mt-4 font-display text-h2 text-foreground"
           >
             {title}
           </h2>
           {lead ? (
-            <p className="mt-5 text-lg leading-relaxed text-muted md:text-xl">
+            <p className="mt-5 text-lg leading-relaxed text-muted-foreground md:text-xl">
               {lead}
             </p>
           ) : null}

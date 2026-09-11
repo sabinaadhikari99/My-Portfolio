@@ -3,6 +3,7 @@ import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
 import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
+import GitHub from "@/components/GitHub";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
@@ -17,6 +18,7 @@ export default function Home() {
         <About />
         <Skills />
         <Projects />
+        <GitHub />
         <Experience />
         <Certifications />
         <Contact />

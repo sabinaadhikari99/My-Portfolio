@@ -16,23 +16,23 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#fbfaf8",
+          background: "#f7f8fa",
           padding: "72px 80px",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 22, letterSpacing: 4, color: "#9c99a2" }}>
+        <div style={{ display: "flex", fontSize: 22, letterSpacing: 4, color: "#676d7b" }}>
           {person.location.toUpperCase()}
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", fontSize: 86, color: "#17161a", lineHeight: 1.05 }}>
+          <div style={{ display: "flex", fontSize: 86, color: "#15171c", lineHeight: 1.05 }}>
             {person.name}
           </div>
-          <div style={{ display: "flex", fontSize: 40, color: "#6f6c75", marginTop: 16 }}>
+          <div style={{ display: "flex", fontSize: 40, color: "#565d6a", marginTop: 16 }}>
             {`${person.role} · ${person.tagline}`}
           </div>
         </div>
-        <div style={{ display: "flex", fontSize: 26, color: "#a4552f" }}>
+        <div style={{ display: "flex", fontSize: 26, color: "#0b62d6" }}>
           Next.js · React · Django · FastAPI · PostgreSQL
         </div>
       </div>

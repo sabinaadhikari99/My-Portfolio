@@ -1,4 +1,4 @@
-import { contact, links, mailtoHref, whatsappHref } from "@/content/profile";
+import { contact, emailHref, links, whatsappHref } from "@/content/profile";
 import ContactForm from "./ContactForm";
 import Reveal from "./Reveal";
 import { ArrowIcon, GitHubIcon, LinkedInIcon, MailIcon, WhatsAppIcon } from "./Icons";
@@ -7,9 +7,9 @@ const channels = [
   {
     label: "Email",
     value: links.EMAIL_ADDRESS,
-    href: mailtoHref,
+    href: emailHref,
     Icon: MailIcon,
-    external: false,
+    external: true,
   },
   {
     label: "WhatsApp",
@@ -39,15 +39,15 @@ export default function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="border-t border-line py-24 md:py-32"
+      className="border-t border-border py-24 md:py-32"
     >
       <div className="shell">
         <Reveal className="max-w-3xl">
           <p className="eyebrow">Contact</p>
-          <h2 id="contact-heading" className="mt-4 font-display text-h2 text-ink">
+          <h2 id="contact-heading" className="mt-4 font-display text-h2 text-foreground">
             {contact.heading}
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-muted md:text-xl">
+          <p className="mt-5 text-lg leading-relaxed text-muted-foreground md:text-xl">
             {contact.body}
           </p>
         </Reveal>
@@ -55,7 +55,7 @@ export default function Contact() {
         <div className="mt-14 grid gap-10 md:grid-cols-[1fr_1.1fr] md:gap-16">
           <Reveal>
              {channels.length ? (
-               <ul className="divide-y divide-line border-y border-line">
+               <ul className="divide-y divide-border border-y border-border">
                  {channels.map(({ label, value, href, Icon, external }) => (
                    <li key={label}>
                      <a
@@ -63,22 +63,22 @@ export default function Contact() {
                        {...(external
                          ? { target: "_blank", rel: "noopener noreferrer" }
                          : {})}
-                       className="group flex items-center gap-4 py-5 transition-colors duration-300 hover:text-accent"
+                       className="group flex items-center gap-4 py-5 transition-colors duration-300 hover:text-primary"
                      >
-                       <Icon className="h-5 w-5 shrink-0 text-faint transition-colors duration-300 group-hover:text-accent" />
+                       <Icon className="h-5 w-5 shrink-0 text-subtle transition-colors duration-300 group-hover:text-primary" />
                        <span className="min-w-0 flex-1">
                          <span className="eyebrow block">{label}</span>
-                         <span className="mt-1 block truncate text-base text-ink transition-colors duration-300 group-hover:text-accent">
+                         <span className="mt-1 block truncate text-base text-foreground transition-colors duration-300 group-hover:text-primary">
                            {value}
                          </span>
                        </span>
-                       <ArrowIcon className="h-4 w-4 shrink-0 text-faint transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent" />
+                       <ArrowIcon className="h-4 w-4 shrink-0 text-subtle transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary" />
                      </a>
                    </li>
                  ))}
                </ul>
              ) : (
-               <p className="border-y border-line py-5 text-muted">
+               <p className="border-y border-border py-5 text-muted-foreground">
                  Contact details will be added here soon.
                </p>
              )}

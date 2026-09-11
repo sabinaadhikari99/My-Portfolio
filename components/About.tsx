@@ -9,17 +9,17 @@ export default function About() {
         <div className="max-w-2xl space-y-6">
           {about.paragraphs.map((paragraph, i) => (
             <Reveal key={i} delay={i * 90}>
-              <p className="text-lg leading-relaxed text-graphite">{paragraph}</p>
+              <p className="text-lg leading-relaxed text-foreground-muted">{paragraph}</p>
             </Reveal>
           ))}
         </div>
 
         <Reveal delay={120}>
-          <dl className="space-y-6 border-t border-line pt-6 md:border-l md:border-t-0 md:pl-10 md:pt-0">
+          <dl className="space-y-6 border-t border-border pt-6 md:border-l md:border-t-0 md:pl-10 md:pt-0">
             {about.facts.map((fact) => (
               <div key={fact.label}>
                 <dt className="eyebrow">{fact.label}</dt>
-                <dd className="mt-2 text-base text-ink">{fact.value}</dd>
+                <dd className="mt-2 text-base text-foreground">{fact.value}</dd>
               </div>
             ))}
           </dl>

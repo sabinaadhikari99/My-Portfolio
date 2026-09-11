@@ -58,18 +58,18 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled || open
-          ? "border-b border-line bg-paper/85 backdrop-blur-md"
+          ? "border-b border-border bg-background/85 backdrop-blur-md"
           : "border-b border-transparent"
       }`}
     >
       <div className="shell flex h-[4.5rem] items-center justify-between gap-6">
         <a
           href="#top"
-          className="font-display text-xl tracking-tight text-ink"
+          className="font-display text-xl tracking-tight text-foreground"
           aria-label={`${person.name} — back to top`}
         >
           {person.name.split(" ")[0]}
-          <span className="text-accent">.</span>
+          <span className="text-primary">.</span>
         </a>
 
         <nav aria-label="Primary" className="hidden md:block">
@@ -82,14 +82,14 @@ export default function Header() {
                   <a
                     href={item.href}
                     aria-current={isActive ? "true" : undefined}
-                    className={`relative py-2 text-sm transition-colors duration-300 hover:text-ink ${
-                      isActive ? "text-ink" : "text-muted"
+                    className={`relative py-2 text-sm transition-colors duration-300 hover:text-foreground ${
+                      isActive ? "text-foreground" : "text-muted-foreground"
                     }`}
                   >
                     {item.label}
                     <span
                       aria-hidden
-                      className={`absolute -bottom-0.5 left-0 h-px bg-accent transition-all duration-300 ${
+                      className={`absolute -bottom-0.5 left-0 h-px bg-primary transition-all duration-300 ${
                         isActive ? "w-full" : "w-0"
                       }`}
                     />
@@ -103,7 +103,7 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <a
             href="#contact"
-            className="hidden rounded-full bg-ink px-5 py-2.5 text-sm text-paper transition-colors duration-300 hover:bg-accent md:inline-block"
+            className="hidden rounded-full bg-primary px-5 py-2.5 text-sm text-primary-foreground transition-colors duration-300 hover:bg-primary-hover md:inline-block"
           >
             Let&rsquo;s work together
           </a>
@@ -114,7 +114,7 @@ export default function Header() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-ink md:hidden"
+            className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-foreground md:hidden"
           >
             <span className="relative block h-3.5 w-5" aria-hidden>
               <span
@@ -136,7 +136,7 @@ export default function Header() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="border-t border-line bg-paper md:hidden"
+        className="border-t border-border bg-background md:hidden"
       >
         <nav aria-label="Mobile" className="shell py-6">
           <ul className="flex flex-col">
@@ -146,7 +146,7 @@ export default function Header() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   style={{ "--rise-delay": `${i * 45}ms` } as React.CSSProperties}
-                  className="animate-rise block border-b border-line py-4 font-display text-2xl text-ink"
+                  className="animate-rise block border-b border-border py-4 font-display text-2xl text-foreground"
                 >
                   {item.label}
                 </a>
@@ -156,7 +156,7 @@ export default function Header() {
           <a
             href="#contact"
             onClick={() => setOpen(false)}
-            className="mt-6 block rounded-full bg-ink px-6 py-3.5 text-center text-sm text-paper"
+            className="mt-6 block rounded-full bg-primary px-6 py-3.5 text-center text-sm text-primary-foreground"
           >
             Let&rsquo;s work together
           </a>
