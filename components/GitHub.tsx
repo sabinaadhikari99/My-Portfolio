@@ -4,10 +4,6 @@ import Section from "./Section";
 import Reveal from "./Reveal";
 import { ExternalIcon, GitHubIcon } from "./Icons";
 
-/**
- * Tints for the language bar, defined once in globals.css. The legend repeats
- * every name and percentage, so colour is never the only thing carrying meaning.
- */
 const RAMP = [
   "var(--chart-1)",
   "var(--chart-2)",
@@ -28,7 +24,6 @@ function RepoIcon({ className = "h-4 w-4" }: { className?: string }) {
 export default async function GitHub() {
   const { repos, languages, stale } = await getGitHubData();
 
-  // Nothing to show and no snapshot to fall back on — hide rather than empty.
   if (!repos.length) return null;
 
   return (
@@ -39,10 +34,10 @@ export default async function GitHub() {
       lead="Public repositories and the language distribution across them."
     >
       <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr] lg:gap-8">
-        {/* Pinned repositories -------------------------------------------- */}
+        {/* Pinned repositories */}
         <Reveal>
-          <div className="h-full rounded-2xl border border-border bg-card p-6 md:p-8">
-            <h3 className="flex items-center gap-2.5 text-sm font-medium text-foreground">
+          <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-[0_4px_20px_-8px_rgba(15,23,42,0.06)] md:p-8">
+            <h3 className="flex items-center gap-2.5 text-sm font-bold text-foreground">
               <GitHubIcon className="h-4 w-4 text-muted-foreground" />
               Pinned repositories
             </h3>
@@ -54,11 +49,11 @@ export default async function GitHub() {
                     href={repo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex h-full flex-col rounded-xl border border-border bg-background p-5 transition-colors duration-300 hover:border-border-strong"
+                    className="group flex h-full flex-col rounded-xl border border-border bg-background p-5 transition-all duration-300 hover:border-border-strong hover:shadow-[0_2px_12px_-4px_rgba(15,23,42,0.06)]"
                   >
                     <span className="flex items-start gap-2.5">
-                      <RepoIcon className="mt-0.5 h-4 w-4 shrink-0 text-subtle transition-colors duration-300 group-hover:text-primary" />
-                      <span className="min-w-0 break-words text-sm font-medium text-foreground transition-colors duration-300 group-hover:text-primary">
+                      <RepoIcon className="mt-0.5 h-4 w-4 shrink-0 text-subtle transition-colors duration-300 group-hover:text-accent" />
+                      <span className="min-w-0 break-words text-sm font-medium text-foreground transition-colors duration-300 group-hover:text-accent">
                         {repo.name}
                       </span>
                     </span>
@@ -81,18 +76,18 @@ export default async function GitHub() {
           </div>
         </Reveal>
 
-        {/* Language distribution + profile --------------------------------- */}
+        {/* Language distribution + profile */}
         <Reveal delay={100}>
           <div className="flex h-full flex-col gap-6">
             {languages.length ? (
-              <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
-                <h3 className="text-sm font-medium text-foreground">Language distribution</h3>
+              <div className="rounded-2xl border border-border bg-card p-6 shadow-[0_4px_20px_-8px_rgba(15,23,42,0.06)] md:p-8">
+                <h3 className="text-sm font-bold text-foreground">Language distribution</h3>
                 <p className="mt-1.5 text-xs leading-relaxed text-subtle">
                   By bytes of code across public repositories.
                 </p>
 
                 <div
-                  className="mt-5 flex h-2 w-full overflow-hidden rounded-full bg-border"
+                  className="mt-5 flex h-2.5 w-full overflow-hidden rounded-full bg-border"
                   role="img"
                   aria-label={languages
                     .map((l) => `${l.name} ${l.percent.toFixed(0)}%`)
@@ -118,7 +113,7 @@ export default async function GitHub() {
                       <span className="flex min-w-0 items-center gap-2.5">
                         <span
                           aria-hidden
-                          className="h-2 w-2 shrink-0 rounded-full"
+                          className="h-2.5 w-2.5 shrink-0 rounded-full"
                           style={{ backgroundColor: RAMP[i % RAMP.length] }}
                         />
                         <span className="truncate text-foreground-muted">{language.name}</span>
@@ -142,17 +137,17 @@ export default async function GitHub() {
               href={links.GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-6 transition-colors duration-300 hover:border-border-strong md:p-8"
+              className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-6 shadow-[0_4px_20px_-8px_rgba(15,23,42,0.06)] transition-all duration-300 hover:border-border-strong hover:shadow-[0_4px_20px_-8px_rgba(15,23,42,0.1)] md:p-8"
             >
               <span className="min-w-0">
-                <span className="block text-sm font-medium text-foreground transition-colors duration-300 group-hover:text-primary">
+                <span className="block text-sm font-bold text-foreground transition-colors duration-300 group-hover:text-accent">
                   GitHub profile
                 </span>
                 <span className="mt-1 block truncate text-sm text-muted-foreground">
                   @{github.username}
                 </span>
               </span>
-              <ExternalIcon className="h-4 w-4 shrink-0 text-subtle transition-colors duration-300 group-hover:text-primary" />
+              <ExternalIcon className="h-4 w-4 shrink-0 text-subtle transition-colors duration-300 group-hover:text-accent" />
             </a>
           </div>
         </Reveal>

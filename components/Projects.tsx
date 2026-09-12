@@ -4,11 +4,6 @@ import Reveal from "./Reveal";
 import Section from "./Section";
 import { ExternalIcon, GitHubIcon } from "./Icons";
 
-/**
- * Cover panel for a project. Uses a real screenshot when one is provided in
- * content/profile.ts, and otherwise a typographic panel — so the page never
- * ships a broken or placeholder image.
- */
 function Cover({ project, index }: { project: Project; index: number }) {
   const initials = project.name
     .split(" ")
@@ -16,97 +11,107 @@ function Cover({ project, index }: { project: Project; index: number }) {
     .slice(0, 2)
     .map((w) => w[0])
     .join("");
-  const coverStyle = [
-    "bg-gradient-to-br from-accent via-card to-secondary",
-    "bg-gradient-to-br from-secondary via-card to-accent",
-    "bg-gradient-to-br from-accent via-secondary to-card",
-    "bg-gradient-to-br from-card via-accent to-secondary",
-  ][index % 4];
+
+  if (project.name === "Office Management System") {
+    return (
+      <div className="group/cover relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-muted via-card to-secondary">
+        <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:2rem_2rem]" />
+        <div className="relative flex h-full flex-col items-center justify-center">
+          <span className="font-display text-7xl font-bold text-primary/20 md:text-8xl">
+            OM
+          </span>
+        </div>
+        <span className="absolute left-5 top-5 rounded-full bg-accent/90 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.16em] text-accent-foreground backdrop-blur-sm">
+          FEATURED
+        </span>
+      </div>
+    );
+  }
 
   if (project.name === "Online Pharmacy") {
     return (
-      <div className="group/cover relative aspect-[16/10] overflow-hidden rounded-2xl border border-[#c8e1e3] bg-[#edf8f8] text-[#123b45]">
+      <div className="group/cover relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-[#edf8f8] via-card to-[#f0fafb] text-[#123b45]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_42%,rgba(181,229,231,0.85),transparent_42%)]" />
         <div className="relative flex h-full flex-col">
-          <div className="flex items-center gap-3 border-b border-[#d6e9e9] bg-white/65 px-4 py-3 backdrop-blur-sm md:px-6">
-            <span className="font-display text-xl font-semibold tracking-tight">
-              Shop<span className="text-[#1498a8]">.</span>
+          <div className="flex items-center gap-3 border-b border-border bg-white/65 px-4 py-3 backdrop-blur-sm md:px-6">
+            <span className="font-display text-xl font-bold tracking-tight">
+              Shop<span className="text-accent">.</span>
             </span>
-            <div className="ml-auto hidden h-8 w-2/5 items-center rounded-lg border border-[#c9dfe0] bg-[#e5f0f0] px-3 text-[0.55rem] text-[#789396] sm:flex">
+            <div className="ml-auto hidden h-8 w-2/5 items-center rounded-lg border border-border bg-muted px-3 text-[0.55rem] text-muted-foreground sm:flex">
               Search medicines, health products...
-              <span className="ml-auto rounded-full bg-[#1098a8] px-2 py-1 font-semibold text-white">
+              <span className="ml-auto rounded-full bg-accent px-2 py-1 font-semibold text-white">
                 Search
               </span>
             </div>
-            <span className="text-[0.58rem] text-[#668589]">About</span>
-            <span className="text-[0.58rem] text-[#668589]">Contact</span>
-            <span className="rounded-md bg-[#1098a8] px-2.5 py-1.5 text-[0.58rem] font-semibold text-white">
+            <span className="text-[0.58rem] text-muted-foreground">About</span>
+            <span className="text-[0.58rem] text-muted-foreground">Contact</span>
+            <span className="rounded-md bg-accent px-2.5 py-1.5 text-[0.58rem] font-semibold text-white">
               Login
             </span>
           </div>
           <div className="grid flex-1 grid-cols-[1.05fr_0.95fr] items-center gap-3 px-5 py-5 md:px-8">
             <div className="relative z-10">
-              <span className="inline-flex rounded-full bg-white/85 px-2.5 py-1 text-[0.48rem] font-semibold text-[#167c8c] shadow-sm">
+              <span className="inline-flex rounded-full bg-white/85 px-2.5 py-1 text-[0.48rem] font-semibold text-accent shadow-sm">
                 Nepal&apos;s Trusted Online Pharmacy
               </span>
-              <h3 className="mt-3 max-w-[15rem] font-display text-3xl leading-[0.92] tracking-tight text-[#123b45] md:text-4xl">
+              <h3 className="mt-3 max-w-[15rem] font-display text-3xl font-bold leading-[0.92] tracking-tight text-foreground md:text-4xl">
                 Genuine Medicines,
                 <br />
-                <span className="text-[#1498a8]">Delivered</span> to Your Door
+                <span className="text-accent">Delivered</span> to Your Door
               </h3>
-              <p className="mt-3 max-w-[13rem] text-[0.58rem] leading-relaxed text-[#719397]">
+              <p className="mt-3 max-w-[13rem] text-[0.58rem] leading-relaxed text-muted-foreground">
                 Your trusted online pharmacy for authentic medicines and health
                 products, delivered fast across Nepal.
               </p>
-              <span className="mt-4 inline-flex rounded-lg bg-[#1098a8] px-3.5 py-2 text-[0.58rem] font-semibold text-white shadow-md shadow-[#1098a8]/20">
+              <span className="mt-4 inline-flex rounded-lg bg-accent px-3.5 py-2 text-[0.58rem] font-semibold text-white shadow-md shadow-accent/20">
                 Browse Products &nbsp;›
               </span>
             </div>
             <div className="relative flex h-full items-center justify-center">
-              <span className="absolute right-1 top-2 h-9 w-9 rotate-6 rounded-lg bg-white p-2 text-center text-[0.42rem] shadow-lg shadow-[#6e9fa3]/20">
+              <span className="absolute right-1 top-2 h-9 w-9 rotate-6 rounded-lg bg-white p-2 text-center text-[0.42rem] shadow-lg">
                 💊
               </span>
-              <span className="absolute bottom-3 left-0 h-10 w-10 -rotate-6 rounded-lg bg-white p-2 text-center text-[0.42rem] shadow-lg shadow-[#6e9fa3]/20">
+              <span className="absolute bottom-3 left-0 h-10 w-10 -rotate-6 rounded-lg bg-white p-2 text-center text-[0.42rem] shadow-lg">
                 🧴
               </span>
-              <div className="relative w-[9.5rem] rounded-2xl bg-white/75 p-3 text-center shadow-xl shadow-[#6e9fa3]/20 backdrop-blur-sm md:w-44">
+              <div className="relative w-[9.5rem] rounded-2xl bg-white/75 p-3 text-center shadow-xl backdrop-blur-sm md:w-44">
                 <div className="mx-auto flex aspect-square w-3/4 items-center justify-center rounded-xl bg-white text-4xl">
                   🧴
                 </div>
-                <p className="mt-2 text-[0.43rem] font-semibold uppercase tracking-wide text-[#1498a8]">
+                <p className="mt-2 text-[0.43rem] font-semibold uppercase tracking-wide text-accent">
                   Personal Care
                 </p>
-                <p className="mt-1 font-display text-sm leading-tight text-[#123b45]">
+                <p className="mt-1 font-display text-sm font-bold leading-tight text-foreground">
                   Health products
                 </p>
               </div>
             </div>
           </div>
-          <div className="mx-5 mb-4 grid grid-cols-3 divide-x divide-[#d6e9e9] rounded-xl bg-white/80 py-2 shadow-sm backdrop-blur-sm md:mx-8">
+          <div className="mx-5 mb-4 grid grid-cols-3 divide-x divide-border rounded-xl bg-white/80 py-2 shadow-sm backdrop-blur-sm md:mx-8">
             <div className="px-2 text-center text-[0.45rem] font-semibold">
               ✓ Genuine
               <br />
-              <span className="font-normal text-[#789396]">
+              <span className="font-normal text-muted-foreground">
                 Verified suppliers
               </span>
             </div>
             <div className="px-2 text-center text-[0.45rem] font-semibold">
               ▣ Fast Delivery
               <br />
-              <span className="font-normal text-[#789396]">
+              <span className="font-normal text-muted-foreground">
                 1–3 business days
               </span>
             </div>
             <div className="px-2 text-center text-[0.45rem] font-semibold">
               ◷ 24/7 Support
               <br />
-              <span className="font-normal text-[#789396]">
+              <span className="font-normal text-muted-foreground">
                 Always here to help
               </span>
             </div>
           </div>
         </div>
-        <span className="absolute left-5 top-5 rounded-full bg-white/85 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.16em] text-[#1498a8] backdrop-blur-sm">
+        <span className="absolute left-5 top-5 rounded-full bg-accent/90 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.16em] text-accent-foreground backdrop-blur-sm">
           FEATURED
         </span>
       </div>
@@ -127,7 +132,7 @@ function Cover({ project, index }: { project: Project; index: number }) {
         <div className="relative flex h-full flex-col">
           <div className="flex items-center border-b border-white/15 bg-[#3f594e]/90 px-5 py-3 backdrop-blur-sm md:px-8">
             <div className="text-center leading-none">
-              <span className="block font-serif text-[0.7rem] tracking-[0.28em]">
+              <span className="block font-serif text-[0.7rem] font-bold tracking-[0.28em]">
                 PRAKRITIK
               </span>
               <span className="mt-1 block text-[0.34rem] tracking-[0.34em] text-white/75">
@@ -138,7 +143,7 @@ function Cover({ project, index }: { project: Project; index: number }) {
               <span className="border-b border-white pb-1 text-white">
                 HOME
               </span>
-              <span>THERAPIES⌄</span>
+              <span>THERAPIES⌋</span>
               <span>PACKAGES</span>
               <span>ABOUT</span>
               <span>BLOG</span>
@@ -151,7 +156,7 @@ function Cover({ project, index }: { project: Project; index: number }) {
               <p className="text-[0.5rem] font-semibold uppercase tracking-[0.22em] text-white/75">
                 Wellness, naturally
               </p>
-              <h3 className="mt-3 font-display text-3xl leading-[1.05] tracking-tight md:text-4xl">
+              <h3 className="mt-3 font-display text-3xl font-bold leading-[1.05] tracking-tight md:text-4xl">
                 Authentic Ayurvedic massage &amp; Panchakarma in Pokhara
               </h3>
               <p className="mt-4 max-w-[16rem] text-[0.58rem] leading-relaxed text-white/80">
@@ -169,7 +174,7 @@ function Cover({ project, index }: { project: Project; index: number }) {
             <span className="h-1.5 w-1.5 rounded-full bg-white/55" />
           </div>
         </div>
-        <span className="absolute right-5 top-5 rounded-full bg-[#3f594e]/85 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.16em] text-white backdrop-blur-sm">
+        <span className="absolute right-5 top-5 rounded-full bg-accent/90 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.16em] text-accent-foreground backdrop-blur-sm">
           FEATURED
         </span>
       </div>
@@ -178,7 +183,7 @@ function Cover({ project, index }: { project: Project; index: number }) {
 
   return (
     <div
-      className={`group/cover relative aspect-[16/10] overflow-hidden rounded-2xl border border-border ${coverStyle}`}
+      className={`group/cover relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-muted via-card to-secondary`}
     >
       {project.image ? (
         <Image
@@ -193,13 +198,13 @@ function Cover({ project, index }: { project: Project; index: number }) {
           aria-hidden
           className="relative flex h-full w-full items-center justify-center overflow-hidden transition-transform duration-700 ease-out-soft group-hover:scale-[1.03]"
         >
-          <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:3rem_3rem]" />
-          <span className="relative font-display text-7xl text-primary/35 md:text-8xl">
+          <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:3rem_3rem]" />
+          <span className="relative font-display text-7xl font-bold text-primary/15 md:text-8xl">
             {initials}
           </span>
         </div>
       )}
-      <span className="absolute left-5 top-5 rounded-full bg-card/85 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.16em] text-primary backdrop-blur-sm">
+      <span className="absolute left-5 top-5 rounded-full bg-accent/90 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.16em] text-accent-foreground backdrop-blur-sm">
         FEATURED
       </span>
     </div>
@@ -211,7 +216,7 @@ function ProjectEntry({ project, index }: { project: Project; index: number }) {
 
   return (
     <Reveal as="article" className="group">
-      <div className="grid items-center gap-7 rounded-3xl border border-border bg-card p-4 shadow-[0_18px_50px_-36px_rgba(21,23,28,0.5)] md:grid-cols-2 md:gap-12 md:p-5">
+      <div className="grid items-center gap-7 rounded-3xl border border-border bg-card p-4 shadow-[0_4px_30px_-12px_rgba(15,23,42,0.08)] transition-all duration-300 hover:shadow-[0_8px_40px_-12px_rgba(15,23,42,0.12)] md:grid-cols-2 md:gap-12 md:p-5">
         <div className={flipped ? "md:order-2" : ""}>
           <Cover project={project} index={index} />
         </div>
@@ -219,8 +224,8 @@ function ProjectEntry({ project, index }: { project: Project; index: number }) {
         <div
           className={`px-2 py-3 md:px-5 md:py-8 ${flipped ? "md:order-1" : ""}`}
         >
-          <p className="eyebrow text-primary">Featured project</p>
-          <h3 className="mt-3 font-display text-3xl text-foreground md:text-4xl">
+          <p className="eyebrow">Featured project</p>
+          <h3 className="mt-3 font-display text-3xl font-bold text-foreground md:text-4xl">
             {project.name}
           </h3>
           <p className="mt-4 text-base leading-relaxed text-foreground-muted md:text-lg">
@@ -234,7 +239,7 @@ function ProjectEntry({ project, index }: { project: Project; index: number }) {
             {project.tech.map((tech) => (
               <li
                 key={tech}
-                className="rounded-full bg-secondary px-3 py-1 text-xs tracking-wide text-muted-foreground"
+                className="rounded-full bg-muted px-3 py-1 text-xs font-medium tracking-wide text-foreground-muted"
               >
                 {tech}
               </li>
@@ -247,7 +252,7 @@ function ProjectEntry({ project, index }: { project: Project; index: number }) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link-underline inline-flex items-center gap-2 text-sm text-foreground"
+                className="link-underline inline-flex items-center gap-2 text-sm font-medium text-foreground"
               >
                 <GitHubIcon className="h-4 w-4" />
                 Source code
@@ -259,7 +264,7 @@ function ProjectEntry({ project, index }: { project: Project; index: number }) {
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover"
               >
                 <ExternalIcon className="h-4 w-4" />
                 Live demo

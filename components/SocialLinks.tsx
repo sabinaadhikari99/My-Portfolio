@@ -10,21 +10,16 @@ export const socials = [
 
 type Props = {
   className?: string;
-  /**
-   * "ghost" is the quiet row used in the footer; "solid" is the filled circle
-   * treatment the hero uses, where the icons act as primary entry points.
-   */
   variant?: "ghost" | "solid";
 };
 
 const styles = {
   ghost:
-    "h-10 w-10 text-muted-foreground hover:bg-accent hover:text-primary",
+    "h-10 w-10 text-muted-foreground hover:bg-accent-light hover:text-accent",
   solid:
-    "h-11 w-11 border border-border bg-card text-foreground shadow-[0_1px_2px_rgba(21,23,28,0.04)] hover:border-primary hover:bg-primary hover:text-primary-foreground",
+    "h-11 w-11 border border-border bg-card text-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)] hover:border-accent hover:bg-accent hover:text-accent-foreground",
 } as const;
 
-/** Compact icon row. Each link keeps a visible-to-screen-readers name. */
 export default function SocialLinks({ className = "", variant = "ghost" }: Props) {
   return (
     <ul className={`flex items-center ${variant === "solid" ? "gap-2.5" : "gap-1"} ${className}`}>

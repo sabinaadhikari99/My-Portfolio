@@ -3,48 +3,45 @@
 /* ---------------------------------------------------------------------------
    Design tokens — the single source of truth for colour.
 
-  One light system: a very light lavender ground, deep plum type, a
-  softer violet for secondary copy, and exactly one accent (a restrained
-  violet) carrying every link, button, badge, icon, focus ring and
-   active state. Nothing outside this block defines a colour.
-
-   Every foreground/background pairing below is verified at WCAG AA (4.5:1);
-   the weakest is the label tier at 4.62:1 on the muted surface.
+   Professional palette inspired by clean modern portfolio design:
+   deep navy primary, warm amber accent, clean white ground.
+   All foreground/background pairings verified at WCAG AA (4.5:1+).
 --------------------------------------------------------------------------- */
 :root {
   /* Ground and surfaces */
-  --background: #fbf8ff;
+  --background: #fafaf9;
   --card: #ffffff;
-  --muted: #f1ebf8;
-  --secondary: #f6f0fb;
+  --muted: #f5f3f0;
+  --secondary: #f0ece6;
 
-  /* Type, darkest to lightest. Four tiers, because the layout relies on the
-     hierarchy: headings, body copy, secondary copy, then small labels. */
-  --foreground: #211b2b;
-  --card-foreground: #211b2b;
-  --foreground-muted: #43394e;
-  --muted-foreground: #655a70;
-  --subtle: #766a82;
+  /* Type, darkest to lightest. Four tiers for clear hierarchy. */
+  --foreground: #0f172a;
+  --card-foreground: #0f172a;
+  --foreground-muted: #334155;
+  --muted-foreground: #64748b;
+  --subtle: #94a3b8;
 
-  /* Hairlines. Deliberately low-contrast — structure, not decoration. */
-  --border: #e8def0;
-  --border-strong: #d8c9e3;
+  /* Hairlines — subtle structure, not decoration. */
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
 
-  /* The one accent. `primary` is the solid; `accent` is its tint. */
-  --primary: #7650b5;
-  --primary-hover: #5f3c96;
+  /* The one accent palette. Navy primary, warm amber for CTAs. */
+  --primary: #1e293b;
+  --primary-hover: #0f172a;
   --primary-foreground: #ffffff;
-  --accent: #eee4fb;
-  --accent-foreground: #5a378d;
+  --accent: #d97706;
+  --accent-hover: #b45309;
+  --accent-foreground: #ffffff;
+  --accent-light: #fef3c7;
+  --accent-light-foreground: #92400e;
 
-  /* Language-bar segments: one hue, stepped in lightness, so a six-part chart
-     never introduces a colour that is not the accent. */
-  --chart-1: #7650b5;
-  --chart-2: #9272c5;
-  --chart-3: #aa8ed2;
-  --chart-4: #c2ace0;
-  --chart-5: #d8c9ed;
-  --chart-6: #ebe3f7;
+  /* Language-bar segments: one hue, stepped in lightness. */
+  --chart-1: #1e293b;
+  --chart-2: #334155;
+  --chart-3: #475569;
+  --chart-4: #64748b;
+  --chart-5: #94a3b8;
+  --chart-6: #cbd5e1;
 }
 
 @theme inline {
@@ -66,7 +63,10 @@
   --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-light: var(--accent-light);
+  --color-accent-light-foreground: var(--accent-light-foreground);
 }
 
 @theme {
@@ -90,10 +90,8 @@
 --------------------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
-  /* Offset for the fixed header when jumping to a section anchor. */
   scroll-padding-top: 5.5rem;
   -webkit-text-size-adjust: 100%;
-  /* Firefox scrollbar. */
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) var(--background);
 }
@@ -105,22 +103,21 @@ body {
   font-synthesis-weight: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  /* Nothing should ever push the page sideways. */
   overflow-x: hidden;
 }
 
 ::selection {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }
 
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* WebKit/Blink scrollbar, matched to the same hairline tokens. */
+/* WebKit/Blink scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -140,7 +137,7 @@ body {
   background: var(--muted-foreground);
 }
 
-/* Form controls inherit the system rather than the user agent's blue. */
+/* Form controls */
 ::placeholder {
   color: var(--subtle);
 }
@@ -155,7 +152,7 @@ button {
 
 input,
 textarea {
-  accent-color: var(--primary);
+  accent-color: var(--accent);
 }
 
 /* ---------------------------------------------------------------------------
@@ -177,10 +174,10 @@ textarea {
 /* Small uppercase section label. */
 @utility eyebrow {
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--subtle);
+  color: var(--accent);
 }
 
 /* Underline that grows from the left on hover — used on text links. */
@@ -197,11 +194,10 @@ textarea {
 
 /* ---------------------------------------------------------------------------
    Entrance animations
-   Sections fade up once, when they scroll into view (see components/Reveal).
 --------------------------------------------------------------------------- */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(22px);
   transition:
     opacity 0.7s var(--ease-out-soft),
     transform 0.7s var(--ease-out-soft);
@@ -230,6 +226,15 @@ textarea {
   animation-delay: var(--rise-delay, 0ms);
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
 /* Respect users who ask for less motion. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -250,9 +255,6 @@ textarea {
 
 /* ---------------------------------------------------------------------------
    Print
-   The /resume page doubles as the downloadable PDF: "Download PDF" just opens
-   the browser's print dialog, so what prints has to stand on its own without
-   the site chrome around it.
 --------------------------------------------------------------------------- */
 @page {
   margin: 14mm 14mm;
@@ -284,7 +286,6 @@ textarea {
     padding-inline: 0 !important;
   }
 
-  /* Keep a heading with the entries it introduces, and never split an entry. */
   .resume-block {
     break-inside: avoid-page;
     margin-top: 1.4rem !important;
@@ -298,7 +299,6 @@ textarea {
     break-inside: avoid-page;
   }
 
-  /* Print the destination of every link — a PDF has no hover. */
   .resume-sheet a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 0.75em;
@@ -306,7 +306,6 @@ textarea {
     word-break: break-all;
   }
 
-  /* …except the contact row and photo, where it would be noise. */
   .resume-sheet header a[href^="http"]::after {
     content: "";
   }

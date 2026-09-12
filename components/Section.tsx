@@ -4,18 +4,11 @@ type Props = {
   id: string;
   eyebrow: string;
   title: string;
-  /** Optional sentence sitting under the section title. */
   lead?: string;
   children: React.ReactNode;
-  /** Paints the band in white to separate it from the paper background. */
   surface?: boolean;
 };
 
-/**
- * The shared section shell: an uppercase label, a large serif heading, an
- * optional lead paragraph, then content. Every section on the page uses it so
- * the rhythm and spacing stay identical top to bottom.
- */
 export default function Section({
   id,
   eyebrow,
@@ -39,7 +32,7 @@ export default function Section({
           <p className="eyebrow">{eyebrow}</p>
           <h2
             id={`${id}-heading`}
-            className="mt-4 font-display text-h2 text-foreground"
+            className="mt-4 font-display text-h2 font-bold tracking-tight text-foreground"
           >
             {title}
           </h2>

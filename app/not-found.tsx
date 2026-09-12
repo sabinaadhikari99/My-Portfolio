@@ -5,7 +5,7 @@ export default function NotFound() {
     <main className="flex min-h-screen items-center">
       <div className="shell">
         <p className="eyebrow">404</p>
-        <h1 className="mt-4 font-display text-h2 text-foreground">
+        <h1 className="mt-4 font-display text-h2 font-bold text-foreground">
           This page doesn&rsquo;t exist.
         </h1>
         <p className="mt-4 max-w-md leading-relaxed text-muted-foreground">
@@ -14,7 +14,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="mt-8 inline-block rounded-full bg-primary px-7 py-3.5 text-sm text-primary-foreground transition-colors duration-300 hover:bg-primary-hover"
+          className="mt-8 inline-block rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-foreground transition-colors duration-300 hover:bg-accent-hover"
         >
           Back to the portfolio
         </Link>

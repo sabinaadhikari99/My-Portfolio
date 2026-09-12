@@ -4,11 +4,6 @@ import Reveal from "./Reveal";
 import Section from "./Section";
 import { ExternalIcon } from "./Icons";
 
-/**
- * Renders nothing at all when the certifications list is empty — an empty
- * section is worse than no section, and placeholder credentials are not an
- * option.
- */
 export default function Certifications() {
   if (certifications.length === 0) return null;
 
@@ -39,12 +34,12 @@ export default function Certifications() {
 
               <div className="flex flex-1 flex-col p-6">
                 {cert.category ? (
-                  <span className="self-start rounded-full border border-border bg-background px-3 py-1 text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                  <span className="self-start rounded-full bg-accent-light px-3 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-accent-light-foreground">
                     {cert.category}
                   </span>
                 ) : null}
 
-                <h3 className="mt-4 text-lg leading-snug text-foreground transition-colors duration-300 group-hover:text-primary">
+                <h3 className="mt-4 text-lg font-bold leading-snug text-foreground transition-colors duration-300 group-hover:text-accent">
                   {cert.name}
                 </h3>
 
@@ -52,7 +47,7 @@ export default function Certifications() {
                 <p className="mt-0.5 text-sm text-subtle">{cert.date}</p>
 
                 {href ? (
-                  <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm text-primary">
+                  <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-medium text-accent">
                     <ExternalIcon className="h-3.5 w-3.5" />
                     View certificate
                   </span>
@@ -69,7 +64,7 @@ export default function Certifications() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`View the ${cert.name} certificate from ${cert.issuer}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-colors duration-300 hover:border-border-strong"
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-border-strong hover:shadow-[0_4px_20px_-8px_rgba(15,23,42,0.08)]"
                 >
                   {card}
                 </a>

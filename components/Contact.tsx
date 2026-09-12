@@ -44,7 +44,7 @@ export default function Contact() {
       <div className="shell">
         <Reveal className="max-w-3xl">
           <p className="eyebrow">Contact</p>
-          <h2 id="contact-heading" className="mt-4 font-display text-h2 text-foreground">
+          <h2 id="contact-heading" className="mt-4 font-display text-h2 font-bold text-foreground">
             {contact.heading}
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground md:text-xl">
@@ -63,16 +63,16 @@ export default function Contact() {
                        {...(external
                          ? { target: "_blank", rel: "noopener noreferrer" }
                          : {})}
-                       className="group flex items-center gap-4 py-5 transition-colors duration-300 hover:text-primary"
+                       className="group flex items-center gap-4 py-5 transition-colors duration-300 hover:text-accent"
                      >
-                       <Icon className="h-5 w-5 shrink-0 text-subtle transition-colors duration-300 group-hover:text-primary" />
+                       <Icon className="h-5 w-5 shrink-0 text-subtle transition-colors duration-300 group-hover:text-accent" />
                        <span className="min-w-0 flex-1">
                          <span className="eyebrow block">{label}</span>
-                         <span className="mt-1 block truncate text-base text-foreground transition-colors duration-300 group-hover:text-primary">
+                         <span className="mt-1 block truncate text-base text-foreground transition-colors duration-300 group-hover:text-accent">
                            {value}
                          </span>
                        </span>
-                       <ArrowIcon className="h-4 w-4 shrink-0 text-subtle transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary" />
+                       <ArrowIcon className="h-4 w-4 shrink-0 text-subtle transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent" />
                      </a>
                    </li>
                  ))}
