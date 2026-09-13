@@ -235,6 +235,37 @@ textarea {
   animation: float 3s ease-in-out infinite;
 }
 
+/* Laptop entrance animation */
+@keyframes laptop-entrance {
+  from {
+    opacity: 0;
+    transform: translate(60px, 80px) scale(0.85) rotate(6deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+}
+
+.hero-laptop {
+  animation: laptop-entrance 1s var(--ease-out-soft) 0.4s both;
+  will-change: transform, opacity;
+}
+
+/* Scroll-driven transitions for hero elements */
+.hero-section .hero-laptop,
+.hero-section .hero-badge,
+.hero-section .hero-title,
+.hero-section .hero-subtitle,
+.hero-section .hero-description,
+.hero-section .hero-buttons,
+.hero-section .hero-links,
+.hero-section .hero-scroll {
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
+}
+
 /* Respect users who ask for less motion. */
 @media (prefers-reduced-motion: reduce) {
   html {

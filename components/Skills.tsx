@@ -1,42 +1,56 @@
-import { skillGroups } from "@/content/profile";
+import { featuredSkills } from "@/content/profile";
 import Reveal from "./Reveal";
-import Section from "./Section";
 
 export default function Skills() {
   return (
-    <Section
+    <section
       id="skills"
-      surface
-      eyebrow="Skills"
-      title="The tools I reach for."
-      lead="Grouped by where they sit in a project, not ranked by a percentage bar. Everything listed here appears in work I have actually shipped."
+      className="bg-white py-24 md:py-32"
+      aria-labelledby="skills-heading"
     >
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {skillGroups.map((group, i) => (
-          <Reveal
-            key={group.title}
-            delay={i * 70}
-            className="rounded-2xl border border-border bg-background p-7 transition-all duration-300 hover:border-border-strong hover:shadow-[0_4px_20px_-8px_rgba(15,23,42,0.08)] md:p-8"
+      <div className="shell">
+        {/* Header */}
+        <Reveal className="text-center">
+          <div className="flex items-center justify-center gap-3">
+            <span className="h-px w-8 bg-accent" />
+            <span className="text-sm font-semibold tracking-wider text-accent">
+              My Favorite Tools
+            </span>
+          </div>
+          <h2
+            id="skills-heading"
+            className="mt-4 font-display text-4xl font-bold md:text-5xl"
           >
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-light text-sm font-bold text-accent">
-                {group.title.charAt(0)}
-              </span>
-              <h3 className="text-base font-bold text-foreground">{group.title}</h3>
-            </div>
-            <ul className="mt-5 flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-full border border-border bg-card px-3.5 py-1.5 text-sm text-foreground-muted transition-colors duration-300 hover:border-accent hover:text-accent"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        ))}
+            <span className="text-accent italic">Exploring the Tools</span>
+            <br />
+            <span className="text-[#1a1a2e]">Behind My Designs</span>
+          </h2>
+        </Reveal>
+
+        {/* Skills grid */}
+        <div className="mt-16 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
+          {featuredSkills.map((skill, i) => (
+            <Reveal key={skill.name} delay={i * 70}>
+              <div className="group flex flex-col items-center rounded-[2rem] bg-gray-100 px-4 py-8 text-center transition-all duration-300 hover:bg-gray-200 hover:shadow-lg">
+                {/* Icon circle */}
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-2xl font-bold text-[#1E293B] shadow-sm transition-transform duration-300 group-hover:scale-110">
+                  {skill.icon}
+                </div>
+
+                {/* Percentage */}
+                <div className="mt-5 text-3xl font-bold text-[#1a1a2e]">
+                  {skill.percentage}%
+                </div>
+
+                {/* Skill name */}
+                <div className="mt-2 text-sm font-medium text-gray-600">
+                  {skill.name}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }

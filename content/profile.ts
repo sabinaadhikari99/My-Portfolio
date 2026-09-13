@@ -120,6 +120,25 @@ export const skillGroups: SkillGroup[] = [
   },
 ];
 
+export type FeaturedSkill = {
+  name: string;
+  percentage: number;
+  icon: string;
+};
+
+/**
+ * Featured skills shown in the skills section with proficiency percentages.
+ * Icons are text-based abbreviations or emojis for simplicity.
+ */
+export const featuredSkills: FeaturedSkill[] = [
+  { name: "Next.js", percentage: 95, icon: "N" },
+  { name: "React", percentage: 92, icon: "R" },
+  { name: "TypeScript", percentage: 90, icon: "TS" },
+  { name: "Python", percentage: 88, icon: "Py" },
+  { name: "Django", percentage: 85, icon: "Dj" },
+  { name: "PostgreSQL", percentage: 82, icon: "Pg" },
+];
+
 export type Project = {
   name: string;
   year: string;
@@ -127,6 +146,7 @@ export type Project = {
   problem: string;
   features: string[];
   tech: string[];
+  tags: string[];
   github?: string;
   demo?: string;
   /**
@@ -161,6 +181,7 @@ export const projects: Project[] = [
       "Gemini API",
       "PostgreSQL",
     ],
+    tags: ["AI/ML", "Web App", "Full Stack"],
     github: "https://github.com/sabinaadhikari99/Project-II",
     image: "/projects/skillsync.png",
   },
@@ -179,6 +200,7 @@ export const projects: Project[] = [
       "Delivery information and prescription guidance for regulated medicines",
     ],
     tech: ["Next.js", "E-commerce", "Nepal delivery", "eSewa", "Khalti"],
+    tags: ["UI/UX Design", "Web Design", "E-commerce"],
     demo: "https://pharmafrontend.neptechpal.com.np/",
   },
   {
@@ -195,6 +217,7 @@ export const projects: Project[] = [
       "Appointment booking, WhatsApp contact and location details for Lakeside, Pokhara",
     ],
     tech: ["Next.js", "Content-driven UI", "Booking flow", "Responsive design"],
+    tags: ["UI/UX Design", "Web Design", "Branding"],
     demo: "https://prakritikayurvedicspa.com/",
   },
   {
@@ -211,6 +234,7 @@ export const projects: Project[] = [
       "Focused internal-tool interface separate from the public marketing site",
     ],
     tech: ["Web application", "Authentication", "Dashboard UI", "Role-based workflows"],
+    tags: ["UI/UX Design", "Dashboard", "Web App"],
     demo: "https://oms.neptechpal.com.np/dashboard",
   },
 ];

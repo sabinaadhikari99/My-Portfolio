@@ -93,10 +93,44 @@ export function LocationIcon({ className = base }: IconProps) {
   );
 }
 
+export function PlayIcon({ className = base }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d="M8 5.14v14l11-7-11-7z" />
+    </svg>
+  );
+}
+
 export function ArrowDownIcon({ className = base }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={className}>
       <path d="M12 4.5v15M6 13.5l6 6 6-6" />
+    </svg>
+  );
+}
+
+export function DownloadIcon({ className = base }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={className}>
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
+  );
+}
+
+export function PhoneIcon({ className = base }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={className}>
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
+  );
+}
+
+export function SkypeIcon({ className = base }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d="M12.069 18.87c-3.425 0-5.594-1.742-5.594-4.661 0-1.609.888-3.362 2.428-4.809.479-.451.862-.771 1.154-.967a5.767 5.767 0 0 1-.412-.696c-.019-.036-.038-.07-.058-.104l-.135.131c-1.186 1.098-2.136 2.626-2.136 4.445 0 2.964 1.946 4.59 4.799 4.59.37 0 .731-.042 1.079-.112-.242.471-.537.915-.882 1.318-.577.291-1.2.465-1.863.465zm7.386.721c-.086.056-.185.088-.289.088-.136 0-.265-.054-.371-.155-.735-.696-1.732-1.053-2.843-1.053h-.138c-.214.426-.479.819-.791 1.169.762.217 1.334.582 1.612 1.064.063.108.026.244-.082.307l-2.013 1.169c-.063.037-.129.054-.196.054-.082 0-.159-.029-.224-.084l-2.012-1.169c-.108-.063-.144-.199-.082-.307.682-1.196 2.143-1.975 3.831-1.975h.138c.055 0 .109.003.163.009a5.769 5.769 0 0 1 .248-1.397h-1.595c-.181 0-.328-.147-.328-.328s.147-.328.328-.328h2.073c.181 0 .328.147.328.328v.027c.424.138.818.342 1.171.608l.039.032c.061.052.068.144.016.205l-1.283 1.492c-.053.061-.144.068-.205.016a4.127 4.127 0 0 0-2.392-.849h-.283c-.181 0-.328.147-.328.328s.147.328.328.328h.167c1.726 0 3.125 1.111 3.125 2.483 0 .096-.016.19-.046.281l.085.056zM12.042 14.226c-1.741 0-3.152 1.225-3.152 2.735 0 .837.458 1.576 1.17 2.043.273.18.574.317.894.409-.022.083-.046.164-.072.245-.016.051.003.106.047.132l1.449.841c.056.032.121.032.177 0l1.449-.841c.044-.026.063-.081.047-.132a3.359 3.359 0 0 0-.072-.245c.32-.092.621-.229.894-.409.712-.467 1.17-1.206 1.17-2.043 0-1.51-1.411-2.735-3.152-2.735zm-1.058 4.091c-.619 0-1.121-.502-1.121-1.121 0-.619.502-1.121 1.121-1.121.619 0 1.121.502 1.121 1.121 0 .619-.502 1.121-1.121 1.121z" />
     </svg>
   );
 }
