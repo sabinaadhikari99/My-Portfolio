@@ -35,6 +35,16 @@ type ApiRepo = {
 
 const API = "https://api.github.com";
 
+/**
+ * How long each response is cached. The repo list is cheap (one call) and is
+ * what changes when Sabina pushes, so it refreshes often. Languages cost one
+ * call per repository, so they refresh hourly.
+ */
+const REVALIDATE = { repos: 600, languages: 3600 } as const;
+
+/** Featured repositories shown, once the curated list is topped up. */
+const MAX_REPOS = 6;
+
 function headers() {
   const token = process.env.GITHUB_TOKEN;
   return {
@@ -58,19 +68,19 @@ async function get<T>(url: string, revalidate: number): Promise<T | null> {
 async function fetchRepos(): Promise<ApiRepo[] | null> {
   return get<ApiRepo[]>(
     `${API}/users/${github.username}/repos?per_page=100&sort=updated`,
-    3600,
+    REVALIDATE.repos,
   );
 }
 
 /**
  * Byte counts per language across every non-fork repository. One request per
- * repo, so it is cached for a day rather than an hour.
+ * repo, so it is cached far longer than the repo list itself.
  */
 async function fetchLanguages(repos: ApiRepo[]): Promise<LanguageSlice[] | null> {
   const results = await Promise.all(
     repos
       .filter((repo) => !repo.fork)
-      .map((repo) => get<Record<string, number>>(repo.languages_url, 86400)),
+      .map((repo) => get<Record<string, number>>(repo.languages_url, REVALIDATE.languages)),
   );
 
   // A partial result would skew the percentages, so treat any miss as a miss.
@@ -94,26 +104,32 @@ async function fetchLanguages(repos: ApiRepo[]): Promise<LanguageSlice[] | null>
 }
 
 /**
- * Featured repositories in the order listed in content/profile.ts. A curated
- * description there wins over GitHub's, so repos with an empty description on
- * GitHub still read well here.
+ * The most recently updated repositories, newest first.
+ *
+ * The list is no longer curated: whatever Sabina touched last is what shows,
+ * so the section tracks real activity instead of a hand-maintained order. The
+ * descriptions in content/profile.ts are still consulted, because several
+ * repos have no description on GitHub and would otherwise render as a bare
+ * name - but they no longer decide which repos appear or in what order.
+ *
+ * Forks are excluded: they are someone else's work.
  */
-function selectPinned(repos: ApiRepo[]): Repo[] {
-  const byName = new Map(repos.map((repo) => [repo.name.toLowerCase(), repo]));
+function latestRepos(repos: ApiRepo[]): Repo[] {
+  const curated = new Map(
+    github.pinned.map(({ repo, description }) => [repo.toLowerCase(), description]),
+  );
 
-  return github.pinned
-    .map(({ repo: name, description }) => {
-      const found = byName.get(name.toLowerCase());
-      if (!found) return null;
-      return {
-        name: found.name,
-        description: description || found.description || "",
-        language: found.language,
-        url: found.html_url,
-        updatedAt: found.updated_at,
-      };
-    })
-    .filter((repo): repo is Repo => repo !== null);
+  return repos
+    .filter((repo) => !repo.fork)
+    .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at))
+    .slice(0, MAX_REPOS)
+    .map((repo) => ({
+      name: repo.name,
+      description: repo.description || curated.get(repo.name.toLowerCase()) || "",
+      language: repo.language,
+      url: repo.html_url,
+      updatedAt: repo.updated_at,
+    }));
 }
 
 export type GitHubData = {
@@ -142,13 +158,13 @@ export async function getGitHubData(): Promise<GitHubData> {
   const repos = await fetchRepos();
   if (!repos) return fallback();
 
-  const pinned = selectPinned(repos);
-  if (!pinned.length) return fallback();
+  const latest = latestRepos(repos);
+  if (!latest.length) return fallback();
 
   const languages = await fetchLanguages(repos);
 
   return {
-    repos: pinned,
+    repos: latest,
     languages: languages ?? github.languageSnapshot.slice(0, github.maxLanguages),
     stale: false,
   };

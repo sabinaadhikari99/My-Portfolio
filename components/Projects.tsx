@@ -1,123 +1,126 @@
 import Image from "next/image";
-import { projects } from "@/content/profile";
+import { projects, sections, type Project } from "@/content/profile";
 import Reveal from "./Reveal";
-import { ArrowIcon } from "./Icons";
+import { CheckIcon, ExternalIcon, GitHubIcon } from "./Icons";
+import Section from "./Section";
 
-function ProjectCard({
-  project,
-  index,
-}: {
-  project: (typeof projects)[number];
-  index: number;
-}) {
+function ProjectCard({ project }: { project: Project }) {
   const initials = project.name
     .split(" ")
-    .filter((w) => /^[A-Za-z]/.test(w))
+    .filter((word) => /^[A-Za-z]/.test(word))
     .slice(0, 2)
-    .map((w) => w[0])
+    .map((word) => word[0])
     .join("");
 
   return (
-    <Reveal as="article" delay={index * 100}>
-      <div className="group rounded-3xl bg-gray-50 p-4 transition-all duration-300 hover:shadow-xl md:p-5">
-        {/* Image area */}
-        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gray-200">
-          {project.image ? (
-            <Image
-              src={project.image}
-              alt={`${project.name} — interface screenshot`}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover transition-transform duration-700 ease-out-soft group-hover:scale-105"
+    <article className="glass gradient-border group flex h-full flex-col overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-[var(--shadow-glow)]">
+      <div className="relative aspect-[16/9] overflow-hidden">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={`${project.name} interface screenshot`}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-700 ease-out-soft group-hover:scale-105"
+          />
+        ) : (
+          /* No screenshot: a typographic plate rather than a broken image or a
+             stock photo unrelated to the project. */
+          <div className="relative flex h-full w-full items-center justify-center bg-muted">
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-40"
+              style={{
+                backgroundImage:
+                  "linear-gradient(oklch(1 0 0 / 8%) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 8%) 1px, transparent 1px)",
+                backgroundSize: "2.5rem 2.5rem",
+              }}
             />
-          ) : (
-            <div className="relative flex h-full w-full items-center justify-center">
-              <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:3rem_3rem]" />
-              <span className="relative font-display text-7xl font-bold text-primary/15 md:text-8xl">
-                {initials}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Tags */}
-        <div className="mt-5 flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-white"
-            >
-              {tag}
+            <span className="gradient-text relative font-display text-6xl font-bold md:text-7xl">
+              {initials}
             </span>
-          ))}
-        </div>
+          </div>
+        )}
+        {/* Scrim, so the screenshot sits against the dark card instead of
+            ending at a bright edge. */}
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, oklch(0.115 0.038 274 / 88%), transparent 62%)",
+          }}
+        />
+      </div>
 
-        {/* Title + Arrow */}
-        <div className="mt-4 flex items-center justify-between gap-4">
-          <h3 className="font-display text-xl font-bold leading-tight text-[#1a1a2e] md:text-2xl">
-            {project.name}
-          </h3>
-          <a
-            href={project.demo || project.github || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-white transition-colors duration-300 hover:bg-accent-hover"
-            aria-label={`View ${project.name}`}
-          >
-            <ArrowIcon className="h-5 w-5" />
-          </a>
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <h3 className="font-display text-lg font-semibold">{project.name}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          {project.summary}
+        </p>
+
+        <ul className="mt-4 space-y-1.5">
+          {project.features.slice(0, 3).map((feature) => (
+            <li
+              key={feature}
+              className="flex items-start gap-2 text-xs leading-relaxed text-muted-foreground"
+            >
+              <CheckIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-cyan" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+
+        <ul className="mt-4 flex flex-wrap gap-1.5">
+          {project.tech.slice(0, 6).map((tech) => (
+            <li
+              key={tech}
+              className="rounded-full border border-border px-2.5 py-1 text-[11px] text-muted-foreground"
+            >
+              {tech}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto flex flex-wrap items-center gap-2 pt-5">
+          {project.demo ? (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold transition-colors hover:text-cyan"
+            >
+              <ExternalIcon className="h-3.5 w-3.5" />
+              Live demo
+            </a>
+          ) : null}
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <GitHubIcon className="h-3.5 w-3.5" />
+              Source
+            </a>
+          ) : null}
         </div>
       </div>
-    </Reveal>
+    </article>
   );
 }
 
 export default function Projects() {
   return (
-    <section
-      id="projects"
-      className="bg-white py-24 md:py-32"
-      aria-labelledby="projects-heading"
-    >
-      <div className="shell">
-        {/* Header */}
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <Reveal>
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-accent" />
-              <span className="text-sm font-semibold tracking-wider text-accent">
-                My Portfolio
-              </span>
-            </div>
-            <h2
-              id="projects-heading"
-              className="mt-4 font-display text-4xl font-bold md:text-5xl"
-            >
-              My Latest{" "}
-              <span className="text-accent italic">Projects</span>
-            </h2>
+    <Section id="projects" copy={sections.projects}>
+      <div className="grid gap-5 md:grid-cols-2">
+        {projects.map((project, i) => (
+          <Reveal key={project.name} delay={i * 90} className="h-full">
+            <ProjectCard project={project} />
           </Reveal>
-
-          <Reveal delay={100}>
-            <a
-              href="#"
-              className="group inline-flex items-center gap-3 rounded-full border-2 border-accent px-6 py-3 text-sm font-semibold text-[#1a1a2e] transition-colors duration-300 hover:bg-accent hover:text-white"
-            >
-              View All Projects
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-white transition-colors duration-300 group-hover:bg-white group-hover:text-accent">
-                <ArrowIcon className="h-4 w-4" />
-              </span>
-            </a>
-          </Reveal>
-        </div>
-
-        {/* Projects grid */}
-        <div className="mt-12 grid gap-8 sm:grid-cols-2">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.name} project={project} index={i} />
-          ))}
-        </div>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }

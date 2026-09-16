@@ -19,7 +19,7 @@ import ResumeActions from "@/components/ResumeActions";
 
 export const metadata: Metadata = {
   title: "Résumé",
-  description: `Résumé of ${person.name} — ${seo.description}`,
+  description: `Résumé of ${person.name} - ${seo.description}`,
   alternates: { canonical: "/resume" },
 };
 
@@ -104,10 +104,10 @@ export default function ResumePage() {
 
         {/* Masthead ------------------------------------------------------- */}
         <header className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-center">
-          {person.photo ? (
+          {person.avatar ? (
             <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full border border-border">
               <Image
-                src={person.photo}
+                src={person.avatar}
                 alt={`Portrait of ${person.name}`}
                 fill
                 sizes="128px"
@@ -130,7 +130,7 @@ export default function ResumePage() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="link-underline hover:text-primary"
+                      className="link-underline hover:text-cyan"
                     >
                       {label}
                     </a>
@@ -198,7 +198,7 @@ export default function ResumePage() {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="link-underline text-primary"
+                          className="link-underline text-cyan"
                         >
                           Source
                         </a>
@@ -208,7 +208,7 @@ export default function ResumePage() {
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="link-underline text-primary"
+                          className="link-underline text-cyan"
                         >
                           Live demo
                         </a>
@@ -251,7 +251,7 @@ export default function ResumePage() {
                             href={cert.credentialUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="link-underline hover:text-primary"
+                            className="link-underline hover:text-cyan"
                           >
                             {cert.name}
                           </a>

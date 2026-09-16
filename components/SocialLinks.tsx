@@ -1,9 +1,16 @@
 import { emailHref, links, whatsappHref } from "@/content/profile";
-import { GitHubIcon, LinkedInIcon, MailIcon, WhatsAppIcon } from "./Icons";
+import {
+  FacebookIcon,
+  GitHubIcon,
+  LinkedInIcon,
+  MailIcon,
+  WhatsAppIcon,
+} from "./Icons";
 
 export const socials = [
   { label: "GitHub", href: links.GITHUB_URL, Icon: GitHubIcon, external: true },
   { label: "LinkedIn", href: links.LINKEDIN_URL, Icon: LinkedInIcon, external: true },
+  { label: "Facebook", href: links.FACEBOOK_URL, Icon: FacebookIcon, external: true },
   { label: "WhatsApp", href: whatsappHref, Icon: WhatsAppIcon, external: true },
   { label: "Email", href: emailHref, Icon: MailIcon, external: true },
 ] as const;
@@ -15,9 +22,9 @@ type Props = {
 
 const styles = {
   ghost:
-    "h-10 w-10 text-muted-foreground hover:bg-accent-light hover:text-accent",
+    "h-10 w-10 text-muted-foreground transition-colors hover:text-foreground",
   solid:
-    "h-11 w-11 border border-border bg-card text-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)] hover:border-accent hover:bg-accent hover:text-accent-foreground",
+    "glass gradient-border h-11 w-11 text-muted-foreground transition-all duration-300 hover:-translate-y-1 hover:text-foreground hover:shadow-[0_0_24px_-4px_oklch(0.552_0.22_264/0.7)]",
 } as const;
 
 export default function SocialLinks({ className = "", variant = "ghost" }: Props) {

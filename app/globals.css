@@ -3,29 +3,87 @@
 /* ---------------------------------------------------------------------------
    Design tokens — the single source of truth for colour.
 
-   Professional palette inspired by clean modern portfolio design:
-   deep navy primary, warm amber accent, clean white ground.
-   All foreground/background pairings verified at WCAG AA (4.5:1+).
+   Deep indigo ground, a blue-violet-cyan brand gradient, and translucent
+   "glass" surfaces that sit on top of an animated backdrop. Body copy runs on
+   --foreground / --muted-foreground only; --primary and --accent are fills and
+   gradient stops, never small text, because at this chroma they sit near 4:1.
 --------------------------------------------------------------------------- */
 :root {
-  /* Ground and surfaces */
+  color-scheme: dark;
+
+  /* Ground and surfaces. Cards are white at low alpha so the backdrop shows. */
+  --background: oklch(11.5% 0.038 274);
+  --surface: oklch(16% 0.04 274);
+  --card: oklch(100% 0 0 / 0.08);
+  --muted: oklch(100% 0 0 / 0.06);
+  --secondary: oklch(100% 0 0 / 0.1);
+  --input: oklch(100% 0 0 / 0.14);
+
+  --foreground: oklch(100% 0 0);
+  --card-foreground: oklch(100% 0 0);
+  --foreground-muted: oklch(88% 0.015 262);
+  --muted-foreground: oklch(72.7% 0.023 262);
+  --subtle: oklch(60% 0.02 262);
+
+  --border: oklch(100% 0 0 / 0.12);
+  --border-strong: oklch(100% 0 0 / 0.22);
+
+  /* Brand ramp: blue, violet, cyan. */
+  --primary: oklch(55.2% 0.22 264);
+  --primary-hover: oklch(62% 0.22 264);
+  --primary-foreground: oklch(100% 0 0);
+  --accent: oklch(54.1% 0.245 293);
+  --accent-hover: oklch(61% 0.245 293);
+  --accent-foreground: oklch(100% 0 0);
+  --accent-light: oklch(30% 0.09 293);
+  --accent-light-foreground: oklch(85% 0.12 293);
+  --cyan: oklch(71.5% 0.135 213);
+  --ring: oklch(55.2% 0.22 264);
+
+  --gradient-brand: linear-gradient(
+    120deg,
+    oklch(55.2% 0.22 264),
+    oklch(54.1% 0.245 293) 55%,
+    oklch(71.5% 0.135 213)
+  );
+  --shadow-glow: 0 0 0 1px oklch(100% 0 0 / 0.08),
+    0 30px 80px -30px oklch(54.1% 0.245 293 / 0.6);
+  --shadow-soft: 0 24px 60px -24px oklch(55.2% 0.22 264 / 0.45);
+
+  --radius: 1rem;
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Language-bar segments, stepped across the brand ramp. */
+  --chart-1: oklch(55.2% 0.22 264);
+  --chart-2: oklch(54.1% 0.245 293);
+  --chart-3: oklch(71.5% 0.135 213);
+  --chart-4: oklch(65% 0.16 280);
+  --chart-5: oklch(72.7% 0.023 262);
+  --chart-6: oklch(55% 0.02 262);
+}
+
+/* The /oms project page is a separate, light-themed product landing page that
+   shares these tokens. It opts back into the original light palette with
+   data-theme="light" on its root element rather than forking the stylesheet. */
+[data-theme="light"] {
+  color-scheme: light;
+
   --background: #fafaf9;
+  --surface: #ffffff;
   --card: #ffffff;
   --muted: #f5f3f0;
   --secondary: #f0ece6;
+  --input: #ffffff;
 
-  /* Type, darkest to lightest. Four tiers for clear hierarchy. */
   --foreground: #0f172a;
   --card-foreground: #0f172a;
   --foreground-muted: #334155;
   --muted-foreground: #64748b;
   --subtle: #94a3b8;
 
-  /* Hairlines — subtle structure, not decoration. */
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
 
-  /* The one accent palette. Navy primary, warm amber for CTAs. */
   --primary: #1e293b;
   --primary-hover: #0f172a;
   --primary-foreground: #ffffff;
@@ -34,8 +92,9 @@
   --accent-foreground: #ffffff;
   --accent-light: #fef3c7;
   --accent-light-foreground: #92400e;
+  --cyan: #0e7490;
+  --ring: #d97706;
 
-  /* Language-bar segments: one hue, stepped in lightness. */
   --chart-1: #1e293b;
   --chart-2: #334155;
   --chart-3: #475569;
@@ -46,10 +105,12 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-muted: var(--muted);
   --color-secondary: var(--secondary);
+  --color-input: var(--input);
 
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
@@ -67,22 +128,17 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-light: var(--accent-light);
   --color-accent-light-foreground: var(--accent-light-foreground);
+  --color-cyan: var(--cyan);
+  --color-ring: var(--ring);
 }
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-display: var(--font-serif), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-grotesk), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
 
-  --text-display: clamp(2.75rem, 7.5vw, 5.75rem);
-  --text-display--line-height: 1.02;
-  --text-display--letter-spacing: -0.03em;
-
-  --text-h2: clamp(1.9rem, 3.6vw, 2.9rem);
-  --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.02em;
-
-  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* ---------------------------------------------------------------------------
@@ -90,10 +146,10 @@
 --------------------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 6.5rem;
   -webkit-text-size-adjust: 100%;
   scrollbar-width: thin;
-  scrollbar-color: var(--border-strong) var(--background);
+  scrollbar-color: oklch(100% 0 0 / 0.2) transparent;
 }
 
 body {
@@ -107,37 +163,32 @@ body {
 }
 
 ::selection {
-  background-color: var(--accent);
-  color: var(--accent-foreground);
+  background-color: oklch(54.1% 0.245 293 / 0.4);
+  color: var(--foreground);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--ring);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
-/* WebKit/Blink scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: oklch(100% 0 0 / 0.16);
   border: 2px solid var(--background);
   border-radius: 999px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
+  background: oklch(100% 0 0 / 0.28);
 }
 
-/* Form controls */
 ::placeholder {
   color: var(--subtle);
 }
@@ -156,28 +207,96 @@ textarea {
 }
 
 /* ---------------------------------------------------------------------------
-   Utilities
+   Surfaces
 --------------------------------------------------------------------------- */
-@utility shell {
-  width: 100%;
-  max-width: 76rem;
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-  @media (min-width: 768px) {
-    padding-inline: 2.5rem;
-  }
-  @media (min-width: 1280px) {
-    padding-inline: 3.5rem;
+
+/* Frosted panel. Every card, chip and non-CTA button uses this. */
+@utility glass {
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  background: oklch(100% 0 0 / 0.06);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+}
+
+/* Heavier frost with an opaque tint — for the nav and footer, which sit over
+   arbitrary content and have to stay readable. */
+@utility glass-strong {
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
+  background: oklch(16% 0.04 274 / 0.72);
+  border: 1px solid oklch(100% 0 0 / 0.12);
+}
+
+/* A 1px gradient ring: two masks composited so only the padding box survives.
+   A border-image that follows border-radius, which border-image cannot do. */
+@utility gradient-border {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      140deg,
+      oklch(100% 0 0 / 0.22),
+      oklch(55.2% 0.22 264 / 0.55),
+      oklch(54.1% 0.245 293 / 0.45),
+      oklch(100% 0 0 / 0.06)
+    );
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-clip: content-box, border-box;
+    mask-clip: content-box, border-box;
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
   }
 }
 
-/* Small uppercase section label. */
+@utility gradient-text {
+  background: var(--gradient-brand);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@utility card-hover {
+  transition:
+    transform 0.35s var(--ease-out-soft),
+    box-shadow 0.35s,
+    background-color 0.35s;
+  &:hover {
+    box-shadow: var(--shadow-glow);
+    background: oklch(100% 0 0 / 0.1);
+    transform: translateY(-6px);
+  }
+}
+
+/* Vertical rhythm for every section below the hero. */
+@utility section-pad {
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+}
+
+/* Page gutter and measure. */
+@utility shell {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (min-width: 640px) {
+    padding-inline: 1.5rem;
+  }
+}
+
+/* Small uppercase section label. Used by the resume and 404 pages, which keep
+   the plain document layout rather than the glass section frame. */
 @utility eyebrow {
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--cyan);
 }
 
 /* Underline that grows from the left on hover — used on text links. */
@@ -192,15 +311,43 @@ textarea {
   }
 }
 
+/* Cursor-tracked spotlight. The pointer handler writes --mx/--my on the card;
+   with no pointer the fallback centres it, so the hover state still reads. */
+@utility spotlight {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    background: radial-gradient(
+      220px circle at var(--mx, 50%) var(--my, 50%),
+      oklch(54.1% 0.245 293 / 0.35),
+      transparent 70%
+    );
+  }
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
 /* ---------------------------------------------------------------------------
-   Entrance animations
+   Motion
 --------------------------------------------------------------------------- */
+
+/* Scroll-triggered entrance, driven by IntersectionObserver in Reveal.tsx.
+   The transform is composed from per-element custom properties so one rule
+   covers rise, slide-in and scale-in. */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translate3d(var(--reveal-x, 0), var(--reveal-y, 26px), 0)
+    scale(var(--reveal-scale, 1));
   transition:
-    opacity 0.7s var(--ease-out-soft),
-    transform 0.7s var(--ease-out-soft);
+    opacity 0.55s var(--ease-out-soft),
+    transform 0.55s var(--ease-out-soft);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
@@ -210,6 +357,131 @@ textarea {
   transform: none;
 }
 
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate(0) scale(1);
+  }
+  50% {
+    transform: translate(4%, -6%) scale(1.12);
+  }
+}
+
+@keyframes grid-pan {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 60px;
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Hero entrance choreography.
+
+   Phase 1  backdrop fades in            (Backdrop, 0.0s)
+   Phase 2  hero text staggers up        (Hero, 0.06-0.52s)
+   Phase 3  laptop flies in, below right (0.25s)
+   Phase 4  laptop settles               (ends ~1.25s)
+   Phase 5  skill labels, one by one     (SkillOrbit, 0.55s + 0.09s each)
+   Phase 6  wireframe solids fade up     (0.9s)
+   Phase 7  everything hands over to its idle loop
+
+   Total runtime is a shade under two seconds.
+--------------------------------------------------------------------------- */
+@keyframes laptop-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(7%, 12%, 0) scale(0.9) rotate(2.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+}
+
+.hero-laptop-enter {
+  animation: laptop-enter 1s var(--ease-out-soft) 0.25s both;
+}
+
+@keyframes backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.hero-backdrop-enter {
+  animation: backdrop-enter 0.9s ease-out both;
+}
+
+@keyframes wire-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-wire-enter {
+  animation: wire-enter 1.1s var(--ease-out-soft) 0.9s both;
+}
+
+/* Skill nodes in the hero. Opacity and scale only, so the whole set of ten
+   animates on the compositor without touching layout. */
+@keyframes node-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+@keyframes caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-blob {
+  animation: blob-drift 18s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+.animate-caret {
+  animation: caret 1s step-end infinite;
+}
+
+/* Load-time entrances (as opposed to [data-reveal], which waits for scroll).
+   Used by the nav, which drops in, and by anything that should stagger the
+   moment it mounts — mobile menu rows, hero blocks. */
 @keyframes rise {
   from {
     opacity: 0;
@@ -221,49 +493,25 @@ textarea {
   }
 }
 
-.animate-rise {
-  animation: rise 0.9s var(--ease-out-soft) both;
-  animation-delay: var(--rise-delay, 0ms);
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Laptop entrance animation */
-@keyframes laptop-entrance {
+@keyframes rise-down {
   from {
     opacity: 0;
-    transform: translate(60px, 80px) scale(0.85) rotate(6deg);
+    transform: translateY(-30px);
   }
   to {
     opacity: 1;
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: none;
   }
 }
 
-.hero-laptop {
-  animation: laptop-entrance 1s var(--ease-out-soft) 0.4s both;
-  will-change: transform, opacity;
+.animate-rise {
+  animation: rise 0.7s var(--ease-out-soft) both;
+  animation-delay: var(--rise-delay, 0ms);
 }
 
-/* Scroll-driven transitions for hero elements */
-.hero-section .hero-laptop,
-.hero-section .hero-badge,
-.hero-section .hero-title,
-.hero-section .hero-subtitle,
-.hero-section .hero-description,
-.hero-section .hero-buttons,
-.hero-section .hero-links,
-.hero-section .hero-scroll {
-  transition:
-    opacity 0.4s ease-out,
-    transform 0.4s ease-out;
+.animate-rise-down {
+  animation: rise-down 0.7s var(--ease-out-soft) both;
+  animation-delay: var(--rise-delay, 0ms);
 }
 
 /* Respect users who ask for less motion. */
@@ -285,13 +533,39 @@ textarea {
 }
 
 /* ---------------------------------------------------------------------------
-   Print
+   Print — the resume is the only page anyone prints, and it prints as ink on
+   paper. Every token flips back or token-coloured text prints white on white.
 --------------------------------------------------------------------------- */
 @page {
   margin: 14mm 14mm;
 }
 
 @media print {
+  :root {
+    color-scheme: light;
+
+    --background: #ffffff;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --muted: #f5f5f4;
+    --secondary: #eeece8;
+    --input: #ffffff;
+
+    --foreground: #000000;
+    --card-foreground: #000000;
+    --muted-foreground: #374151;
+    --subtle: #4b5563;
+
+    --border: #9ca3af;
+    --border-strong: #6b7280;
+
+    --primary: #000000;
+    --primary-foreground: #ffffff;
+    --accent: #3730a3;
+    --accent-foreground: #ffffff;
+    --cyan: #155e75;
+  }
+
   .no-print,
   header[class*="fixed"],
   footer {
@@ -303,6 +577,25 @@ textarea {
     background: #fff !important;
     color: #000 !important;
     overflow: visible !important;
+  }
+
+  /* Glass and gradient text are screen-only affordances. */
+  .glass,
+  .glass-strong {
+    background: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border-color: #9ca3af !important;
+  }
+
+  .gradient-border::before,
+  .spotlight::after {
+    display: none !important;
+  }
+
+  .gradient-text {
+    background: none !important;
+    color: #000 !important;
   }
 
   .resume-sheet {
@@ -333,11 +626,28 @@ textarea {
   .resume-sheet a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 0.75em;
-    color: var(--muted-foreground);
+    color: #374151;
     word-break: break-all;
   }
 
   .resume-sheet header a[href^="http"]::after {
     content: "";
   }
+}
+
+/* Hero skill chips fade in on a CSS timer rather than from the animation loop.
+   The loop owns their drift; if it never starts - reduced motion, a stalled
+   observer, JS still loading - the chips must still be on screen. */
+@keyframes chip-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-chip-in {
+  animation: chip-in 0.5s var(--ease-out-soft) both;
+  animation-delay: var(--rise-delay, 0ms);
 }

@@ -70,18 +70,68 @@ export default function ProfileLaptop({ photo, name }: Props) {
       frame = requestAnimationFrame(tick);
     };
 
-    frame = requestAnimationFrame(tick);
-    return () => {
+    let visible = true;
+
+    const start = () => {
+      if (frame || !visible || document.hidden) return;
+      lastTime = performance.now();
+      frame = requestAnimationFrame(tick);
+    };
+    const stop = () => {
       cancelAnimationFrame(frame);
+      frame = 0;
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) start();
+        else stop();
+      },
+      { threshold: 0 },
+    );
+    io.observe(scene);
+
+    const onVisibility = () => (document.hidden ? stop() : start());
+    document.addEventListener("visibilitychange", onVisibility);
+
+    start();
+
+    return () => {
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pointermove", onMove);
     };
   }, []);
 
   return (
     <div
-      className="laptop-container relative z-10 h-[26rem] w-[30rem] max-w-full sm:h-[30rem] sm:w-[36rem] md:h-[34rem] md:w-[42rem]"
+      className="laptop-container relative z-10 aspect-[42/34] w-full max-w-[30rem] sm:max-w-[36rem] md:max-w-[42rem]"
       style={{ perspective: "1100px" }}
     >
+      {/* Contact shadow. Sits flat under the laptop rather than travelling
+          with it, which is what sells the object as floating above a surface
+          instead of pasted onto one. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-[4%] left-1/2 h-[9%] w-[62%] -translate-x-1/2 rounded-[50%] blur-xl"
+        style={{
+          background:
+            "radial-gradient(ellipse, rgba(2,4,14,0.85), rgba(2,4,14,0.35) 55%, transparent 75%)",
+        }}
+      />
+
+      {/* Brand glow bleeding out from behind the lid. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-[12%] top-[6%] h-[58%] rounded-[50%] opacity-60 blur-3xl"
+        style={{
+          background:
+            "radial-gradient(ellipse, oklch(0.552 0.22 264 / 42%), oklch(0.541 0.245 293 / 22%) 55%, transparent 75%)",
+        }}
+      />
+
       <div
         ref={sceneRef}
         className="absolute inset-0 origin-center will-change-transform"
@@ -99,7 +149,7 @@ export default function ProfileLaptop({ photo, name }: Props) {
             className="relative h-full w-full rounded-t-[0.9rem] border-[0.3rem] border-b-0 border-[#0a0f1e] bg-[#0a0f1e] sm:border-[0.4rem]"
             style={{
               boxShadow:
-                "0 -2px 20px rgba(56,189,248,0.06), inset 0 1px 0 rgba(255,255,255,0.05)",
+                "0 -2px 28px rgba(99,132,255,0.16), 0 0 60px -12px rgba(150,95,245,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
             }}
           >
             {/* Screen bezel */}

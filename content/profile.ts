@@ -11,13 +11,17 @@ export const person = {
   role: "Software Engineer",
   // Hero headline supporting line. Keep it to one clear sentence.
   tagline: "I build web applications and AI-assisted tools.",
-  location: "Nepal",
+  location: "Pokhara, Nepal",
   // 2-3 sentences shown under the hero headline.
   intro:
-    "I work across the stack — Next.js and React on the front end, Django, DRF and FastAPI on the back end — and I spend most of my time on projects where a real workflow gets simpler because of something I built. Lately that has meant applied AI: retrieval, embeddings and language models wired into products people actually use.",
+    "I work across the stack - Next.js and React on the front end, Django, DRF and FastAPI on the back end - and I spend most of my time on projects where a real workflow gets simpler because of something I built. Lately that has meant applied AI: retrieval, embeddings and language models wired into products people actually use.",
   availability: "Open to software engineering roles and internships",
-  // Portrait shown in the hero and on the résumé. Lives in public/.
+  // Full-length portrait. Lives in public/.
   photo: "/sabina-adhikari.jpg",
+  // Square head-and-shoulders crop of the same photograph, for the places the
+  // picture is rendered small and round: the nav, the footer, the résumé
+  // masthead and the browser tab icon.
+  avatar: "/sabina-avatar.jpg",
 } as const;
 
 /**
@@ -29,6 +33,7 @@ export const links = {
   GITHUB_URL: "https://github.com/sabinaadhikari99",
   LINKEDIN_URL: "https://www.linkedin.com/in/sabina-adhikari-340092263/",
   EMAIL_ADDRESS: "adhikarysabu098@gmail.com",
+  FACEBOOK_URL: "https://www.facebook.com/sabina.adhikari.92505956",
   // International format, digits only, no leading "+" — e.g. 9779800000000
   WHATSAPP_NUMBER: "9779806689443",
   RESUME_URL: "/resume",
@@ -69,19 +74,23 @@ export function whatsappComposeHref(text: string) {
 
 export const nav = [
   { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "GitHub", href: "#github" },
-  { label: "Experience", href: "#experience" },
   { label: "Certifications", href: "#certifications" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
 export const about = {
+  // Sabina's own words, used verbatim. Note that the résumé page renders
+  // paragraphs[0] as its summary line.
   paragraphs: [
-    "I'm a software engineer from Nepal who works mainly on web applications. I started with Python and Django, moved into REST API design with Django REST Framework, and now build interfaces in Next.js and React on top of the APIs I write.",
-    "The work I enjoy most sits where a messy real-world process meets a system that has to be correct: multi-tenant data isolation, role-based permissions, matching a person's skills against a job description. Those problems have edge cases you only find by building the thing and using it.",
-    "Recently I've been working with applied AI — sentence embeddings, FAISS vector search and the Gemini API — as part of a career-matching platform. I'm interested in how retrieval and language models fit into ordinary product features rather than standing alone as a demo.",
+    "Great software begins with a simple idea - and the curiosity to turn that idea into something meaningful. That curiosity has shaped my journey as a software engineer at Pokhara University, where I continue to explore, learn, and build digital solutions that combine thoughtful experiences with reliable technology.",
+    "My journey began with Python and Django, grew into building REST APIs with Django REST Framework, and evolved into creating modern, responsive interfaces with Next.js and React. Along the way, I’ve learned that good software isn’t just about writing code - it’s about understanding real problems and building solutions that genuinely work.",
+    "My journey includes SkillSync AI, my college project focused on connecting people with opportunities through AI-powered career and job-matching features. I’ve also contributed to a Multi-Vendor Inventory Management System, working with multi-tenant architecture, inventory and warehouse management, stock transactions, order integration, and data consistency.",
+    "Beyond that, I’ve worked on the Office Management System (OMS), developing client management, real-time team communication, leave management, and permission-based workflows, and on Prakriti Ayurvedic, a full-stack platform combining thoughtful UI, content management, booking, authentication, and backend systems.",
+    "I believe the most meaningful technology is built with both logic and purpose. Every challenge teaches me something new, every project pushes me to grow, and every line of code is a small step toward building something that truly matters.",
   ],
   // Small stat strip beside the copy. Keep these honest and verifiable.
   facts: [
@@ -104,7 +113,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Backend",
-    items: ["Django", "Django REST Framework", "FastAPI", "Python", "REST API design", "JWT auth"],
+    items: ["Django", "Django REST Framework", "Python", "REST API design", "Blog API", "JWT auth"],
   },
   {
     title: "Databases",
@@ -116,7 +125,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Tools & deployment",
-    items: ["Git", "GitHub", "Docker", "Postman", "Railway", "VS Code"],
+    items: ["Git", "GitHub", "Docker", "Postman", "Swagger", "Railway", "VS Code"],
   },
 ];
 
@@ -151,8 +160,8 @@ export type Project = {
   demo?: string;
   /**
    * Optional screenshot, e.g. "/projects/skillsync.png" for a file at
-   * public/projects/skillsync.png. Omit it and a typographic cover is drawn
-   * instead — no broken or stock imagery.
+   * public/projects/skillsync.png. Omit it and a typographic plate is drawn
+   * instead — never a broken image or unrelated stock photography.
    */
   image?: string;
 };
@@ -202,6 +211,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "E-commerce", "Nepal delivery", "eSewa", "Khalti"],
     tags: ["UI/UX Design", "Web Design", "E-commerce"],
     demo: "https://pharmafrontend.neptechpal.com.np/",
+    image: "/projects/pharmacy.jpg",
   },
   {
     name: "Prakritik Ayurveda Spa",
@@ -219,6 +229,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "Content-driven UI", "Booking flow", "Responsive design"],
     tags: ["UI/UX Design", "Web Design", "Branding"],
     demo: "https://prakritikayurvedicspa.com/",
+    image: "/projects/spa.jpg",
   },
   {
     name: "Office Management System",
@@ -236,6 +247,7 @@ export const projects: Project[] = [
     tech: ["Web application", "Authentication", "Dashboard UI", "Role-based workflows"],
     tags: ["UI/UX Design", "Dashboard", "Web App"],
     demo: "https://oms.neptechpal.com.np/dashboard",
+    image: "/projects/oms.png",
   },
 ];
 
@@ -247,7 +259,21 @@ export type TimelineItem = {
   points: string[];
 };
 
+/** Most recent first — the timeline renders this order as-is. */
 export const experience: TimelineItem[] = [
+  {
+    // Every line below is taken from the completion certificate issued by
+    // Nep Tech Pal on 26 Aug 2026; nothing here is inferred.
+    title: "Backend Intern",
+    org: "Nep Tech Pal Pvt. Ltd.",
+    meta: "Jalpa Road, Pokhara",
+    period: "May – Aug 2026",
+    points: [
+      "Three-month internship in the Development Department, working across both backend and frontend.",
+      "Contributed to the design, development, testing and documentation of web applications built with Django and Next.js.",
+      "Worked on RESTful API design, relational database engineering, frontend integration and secure coding practice.",
+    ],
+  },
   {
     // The reference letter states the internship and its dates but no job
     // title, so this is a neutral placeholder — change it to whatever you
@@ -286,6 +312,15 @@ export type Certification = {
  */
 export const certifications: Certification[] = [
   {
+    name: "Certificate of Internship Completion - Backend Intern",
+    issuer: "Nep Tech Pal Pvt. Ltd., Pokhara",
+    // The signed copy carries an issue date of 26 August 2026; an earlier
+    // revision reads 27 August. Month and year are true of both.
+    date: "August 2026",
+    category: "Internship",
+    image: "/certificates/nep-tech-pal-internship.jpeg",
+  },
+  {
     name: "Full Stack Web Development with Python and Django",
     issuer: "Swift Academy, Pokhara",
     date: "June 2026",
@@ -301,7 +336,7 @@ export const certifications: Certification[] = [
   },
   {
     name: "Security Analysis and Risk Management",
-    issuer: "CS4ALL — co-funded by the European Union",
+    issuer: "CS4ALL - co-funded by the European Union",
     date: "February 2026",
     category: "Security",
     image: "/certificates/security-analysis-and-risk-management.jpeg",
@@ -336,7 +371,7 @@ export const github = {
     },
     {
       repo: "My-Portfolio",
-      description: "This site — a Next.js portfolio with a Neon-backed contact form.",
+      description: "This site - a Next.js portfolio with a Neon-backed contact form.",
       language: "TypeScript",
     },
     {
@@ -376,11 +411,11 @@ export const github = {
 
 export const contact = {
   heading: "Let's build something meaningful.",
-  body: "I'm open to software engineering roles, internships, and collaboration on projects worth the effort. The fastest way to reach me is email or WhatsApp — I reply to everything.",
+  body: "Open to software engineering opportunities, internships, and impactful collaborations. Let's connect.",
 } as const;
 
 export const seo = {
-  title: `${person.name} — ${person.role}`,
+  title: `${person.name} - ${person.role}`,
   description: `${person.name} is a ${person.role.toLowerCase()} building web applications with Next.js, React, Django and PostgreSQL, and applied AI features with FastAPI, FAISS and the Gemini API.`,
   keywords: [
     person.name,
@@ -393,3 +428,172 @@ export const seo = {
     "full-stack developer Nepal",
   ],
 } as const;
+
+/**
+ * Section headings, in the reference's three-part form: an uppercase eyebrow
+ * pill, a title where one phrase carries the brand gradient, and a lead.
+ * Kept here so copy changes never require touching a component.
+ */
+export type SectionCopy = {
+  eyebrow: string;
+  /** Title text before the gradient phrase. */
+  before?: string;
+  /** The phrase rendered in the brand gradient. */
+  accent: string;
+  /** Title text after the gradient phrase. */
+  after?: string;
+  lead?: string;
+};
+
+export const sections: Record<string, SectionCopy> = {
+  about: {
+    eyebrow: "About",
+    before: "Engineering with",
+    accent: "intent",
+  },
+  experience: {
+    eyebrow: "Experience",
+    before: "Where I have been",
+    accent: "building",
+    lead: "A timeline of my experience.",
+  },
+  skills: {
+    eyebrow: "Skills",
+    before: "The",
+    accent: "toolkit",
+    after: "behind the work",
+    lead: "Languages, frameworks and services I have actually shipped with, grouped by where they sit in the stack.",
+  },
+  projects: {
+    eyebrow: "Projects",
+    before: "Work that",
+    accent: "ships",
+    lead: "Turning requirements into thoughtful, real-world solutions.",
+  },
+  github: {
+    eyebrow: "GitHub",
+    before: "Code, in",
+    accent: "public",
+    lead: "Repositories and language mix pulled live from the GitHub API.",
+  },
+  certifications: {
+    eyebrow: "Certifications",
+    before: "Verified",
+    accent: "credentials",
+    lead: "Hover a card to see what each programme covered.",
+  },
+  contact: {
+    eyebrow: "Contact",
+    before: "Let's build something",
+    accent: "meaningful",
+    lead: contact.body,
+  },
+};
+
+/**
+ * Cycled by the hero typewriter. Each line has to be a true description of the
+ * stack in `skillGroups` — this is the first claim a visitor reads.
+ */
+export const heroRoles = [
+  "Full-Stack Web Developer",
+  "Next.js & React",
+  "Django & API Integration",
+  "AI Enthusiast",
+] as const;
+
+/**
+ * About cards. Mirrors the reference's icon + lines + highlight layout using
+ * only facts that exist elsewhere in this file. There is no Education card
+ * because `education` is empty — an invented degree is worse than a gap.
+ */
+export type AboutCard = {
+  icon: "education" | "focus" | "stack" | "availability";
+  title: string;
+  lines: string[];
+  /** Short pill in the top-right corner of the card. */
+  highlight: string;
+  /** Makes the whole card a link. */
+  href?: string;
+};
+
+export const aboutCards: AboutCard[] = [
+  {
+    icon: "education",
+    title: "Education",
+    lines: [
+      "Bachelor of Software Engineering",
+      "Pokhara University",
+      "Diploma in Computer Engineering (9-12)",
+      "Shree Ambika Secondary School",
+    ],
+    highlight: "Engineering",
+  },
+  {
+    icon: "focus",
+    title: "Focus",
+    lines: ["Full-stack web applications", "AI and ML"],
+    highlight: "Product-first",
+  },
+  {
+    icon: "stack",
+    title: "Core stack",
+    lines: [
+      "Next.js, React, TypeScript",
+      "Django, DRF, Python",
+      "PostgreSQL, Neon",
+    ],
+    highlight: "End to end",
+  },
+  {
+    icon: "availability",
+    title: "Currently",
+    lines: [person.availability, "Fastest reply: email or WhatsApp"],
+    highlight: "Available",
+  },
+];
+
+/**
+ * Technologies that orbit the laptop in the hero.
+ *
+ * Every entry must also appear in `skillGroups` — this is a presentation
+ * subset, not a second source of truth. `hue` is the technology's own brand
+ * colour, pulled toward the site's palette so the nodes read as a set rather
+ * than as a row of logos. `mobile` marks the five kept on small screens.
+ */
+export type HeroSkill = {
+  name: string;
+  /** CSS colour for the glowing node beside the label. */
+  hue: string;
+  /** Anchor position over the laptop stage, in percent. */
+  x: number;
+  y: number;
+  /** Drift pattern. Mixed on purpose so no two neighbours move alike. */
+  motion: "orbit" | "sweepX" | "sweepY" | "figure8";
+  /** Seconds for one full cycle. */
+  period: number;
+  /** Drift amplitude in pixels. */
+  amplitude: number;
+  mobile?: boolean;
+};
+
+export const heroSkills: HeroSkill[] = [
+  { name: "Next.js",    hue: "#e8edf7", x: 14, y: 16, motion: "figure8", period: 17, amplitude: 14, mobile: true },
+  { name: "React",      hue: "#61dafb", x: 78, y: 12, motion: "orbit",   period: 14, amplitude: 16, mobile: true },
+  { name: "TypeScript", hue: "#4b8bf5", x: 91, y: 38, motion: "sweepY",  period: 11, amplitude: 18 },
+  { name: "Python",     hue: "#ffd43b", x: 86, y: 68, motion: "orbit",   period: 19, amplitude: 13, mobile: true },
+  { name: "Django",     hue: "#44b78b", x: 66, y: 90, motion: "sweepX",  period: 15, amplitude: 20, mobile: true },
+  { name: "FastAPI",    hue: "#05998b", x: 34, y: 94, motion: "figure8", period: 21, amplitude: 15 },
+  { name: "PostgreSQL", hue: "#7aa7d9", x: 8,  y: 72, motion: "orbit",   period: 16, amplitude: 14 },
+  { name: "Tailwind",   hue: "#38bdf8", x: 4,  y: 44, motion: "sweepY",  period: 13, amplitude: 17 },
+  { name: "FAISS",      hue: "#a78bfa", x: 46, y: 5,  motion: "sweepX",  period: 18, amplitude: 19, mobile: true },
+  { name: "Git",        hue: "#f0724a", x: 26, y: 78, motion: "orbit",   period: 12, amplitude: 12 },
+];
+
+/**
+ * Footer. `quote` is rendered in italics under the social row — it defaults to
+ * the tagline above, which is Sabina's own sentence rather than a quotation
+ * attributed to anyone. Replace it with whatever line you want standing there.
+ */
+export const footer = {
+  quote: "Turning Ideas into Impact",
+};

@@ -1,5 +1,5 @@
 import { getGitHubData } from "@/lib/github";
-import { github, links } from "@/content/profile";
+import { github, links, sections } from "@/content/profile";
 import Section from "./Section";
 import Reveal from "./Reveal";
 import { ExternalIcon, GitHubIcon } from "./Icons";
@@ -21,51 +21,51 @@ function RepoIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
+/**
+ * Repository list and language mix. Both come from the GitHub API at request
+ * time via `getGitHubData`, which falls back to the snapshot in the profile
+ * data when the call is rate-limited — so the figures are always real, and the
+ * section says so when it is serving cached numbers.
+ */
 export default async function GitHub() {
   const { repos, languages, stale } = await getGitHubData();
 
   if (!repos.length) return null;
 
   return (
-    <Section
-      id="github"
-      eyebrow="GitHub"
-      title="Code, committed regularly"
-      lead="Public repositories and the language distribution across them."
-    >
-      <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr] lg:gap-8">
-        {/* Pinned repositories */}
+    <Section id="github" copy={sections.github}>
+      <div className="grid gap-5 lg:grid-cols-[1.6fr_1fr]">
         <Reveal>
-          <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-[0_4px_20px_-8px_rgba(15,23,42,0.06)] md:p-8">
-            <h3 className="flex items-center gap-2.5 text-sm font-bold text-foreground">
+          <div className="glass gradient-border h-full rounded-2xl p-6 md:p-8">
+            <h3 className="flex items-center gap-2.5 font-display text-sm font-semibold">
               <GitHubIcon className="h-4 w-4 text-muted-foreground" />
-              Pinned repositories
+              Latest repositories
             </h3>
 
-            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {repos.map((repo) => (
                 <li key={repo.name}>
                   <a
                     href={repo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex h-full flex-col rounded-xl border border-border bg-background p-5 transition-all duration-300 hover:border-border-strong hover:shadow-[0_2px_12px_-4px_rgba(15,23,42,0.06)]"
+                    className="glass card-hover group flex h-full flex-col rounded-xl p-4"
                   >
                     <span className="flex items-start gap-2.5">
-                      <RepoIcon className="mt-0.5 h-4 w-4 shrink-0 text-subtle transition-colors duration-300 group-hover:text-accent" />
-                      <span className="min-w-0 break-words text-sm font-medium text-foreground transition-colors duration-300 group-hover:text-accent">
+                      <RepoIcon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-colors duration-300 group-hover:text-cyan" />
+                      <span className="min-w-0 break-words text-sm font-medium transition-colors duration-300 group-hover:text-cyan">
                         {repo.name}
                       </span>
                     </span>
 
                     {repo.description ? (
-                      <span className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
+                      <span className="mt-2.5 text-xs leading-relaxed text-muted-foreground">
                         {repo.description}
                       </span>
                     ) : null}
 
                     {repo.language ? (
-                      <span className="mt-auto pt-4 text-xs text-subtle">
+                      <span className="mt-auto pt-4 text-[11px] text-subtle">
                         {repo.language}
                       </span>
                     ) : null}
@@ -76,18 +76,19 @@ export default async function GitHub() {
           </div>
         </Reveal>
 
-        {/* Language distribution + profile */}
         <Reveal delay={100}>
-          <div className="flex h-full flex-col gap-6">
+          <div className="flex h-full flex-col gap-5">
             {languages.length ? (
-              <div className="rounded-2xl border border-border bg-card p-6 shadow-[0_4px_20px_-8px_rgba(15,23,42,0.06)] md:p-8">
-                <h3 className="text-sm font-bold text-foreground">Language distribution</h3>
-                <p className="mt-1.5 text-xs leading-relaxed text-subtle">
+              <div className="glass gradient-border rounded-2xl p-6 md:p-8">
+                <h3 className="font-display text-sm font-semibold">
+                  Language distribution
+                </h3>
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
                   By bytes of code across public repositories.
                 </p>
 
                 <div
-                  className="mt-5 flex h-2.5 w-full overflow-hidden rounded-full bg-border"
+                  className="mt-5 flex h-2.5 w-full overflow-hidden rounded-full bg-secondary"
                   role="img"
                   aria-label={languages
                     .map((l) => `${l.name} ${l.percent.toFixed(0)}%`)
@@ -116,7 +117,9 @@ export default async function GitHub() {
                           className="h-2.5 w-2.5 shrink-0 rounded-full"
                           style={{ backgroundColor: RAMP[i % RAMP.length] }}
                         />
-                        <span className="truncate text-foreground-muted">{language.name}</span>
+                        <span className="truncate text-muted-foreground">
+                          {language.name}
+                        </span>
                       </span>
                       <span className="tabular-nums text-muted-foreground">
                         {language.percent.toFixed(1)}%
@@ -137,17 +140,17 @@ export default async function GitHub() {
               href={links.GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-6 shadow-[0_4px_20px_-8px_rgba(15,23,42,0.06)] transition-all duration-300 hover:border-border-strong hover:shadow-[0_4px_20px_-8px_rgba(15,23,42,0.1)] md:p-8"
+              className="glass gradient-border card-hover group flex items-center justify-between gap-4 rounded-2xl p-6 md:p-8"
             >
               <span className="min-w-0">
-                <span className="block text-sm font-bold text-foreground transition-colors duration-300 group-hover:text-accent">
+                <span className="block font-display text-sm font-semibold transition-colors duration-300 group-hover:text-cyan">
                   GitHub profile
                 </span>
                 <span className="mt-1 block truncate text-sm text-muted-foreground">
                   @{github.username}
                 </span>
               </span>
-              <ExternalIcon className="h-4 w-4 shrink-0 text-subtle transition-colors duration-300 group-hover:text-accent" />
+              <ExternalIcon className="h-4 w-4 shrink-0 text-muted-foreground transition-colors duration-300 group-hover:text-cyan" />
             </a>
           </div>
         </Reveal>

@@ -60,7 +60,10 @@ const navLinks = [
 
 export default function OMSPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-slate-50">
+    <div
+      data-theme="light"
+      className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-slate-50"
+    >
       {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
@@ -155,7 +158,7 @@ export default function OMSPage() {
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
                 A modern and efficient web application to manage office
                 operations including employees, leave requests, projects, files,
-                and notifications — all in one place.
+                and notifications - all in one place.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -718,7 +721,7 @@ export default function OMSPage() {
               OMS
             </span>
             <p className="mt-2 text-sm text-muted-foreground">
-              Office Management System — Built by Sabina Adhikari
+              Office Management System - Built by Sabina Adhikari
             </p>
           </div>
           <Link

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { person, seo } from "@/content/profile";
 
@@ -9,11 +9,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const display = Instrument_Serif({
+// Space Grotesk carries the display type: the hero name, section headings
+// and card titles. Inter handles everything else.
+const display = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["500", "600", "700"],
   display: "swap",
-  variable: "--font-serif",
+  variable: "--font-grotesk",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: seo.title,
-    template: `%s — ${person.name}`,
+    template: `%s - ${person.name}`,
   },
   description: seo.description,
   keywords: [...seo.keywords],
@@ -49,7 +51,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fafaf9",
+  themeColor: "#030413",
   width: "device-width",
   initialScale: 1,
 };
@@ -72,7 +74,7 @@ export default function RootLayout({
       <body>
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-5 focus:py-2.5 focus:text-sm focus:text-primary-foreground"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-primary-foreground"
         >
           Skip to content
         </a>

@@ -17,7 +17,7 @@ export default function ResumeActions() {
       <Link href="/#contact" className="inline-flex items-center gap-2 rounded-full border border-border-strong px-7 py-3.5 text-sm font-medium text-foreground transition-colors duration-300 hover:border-accent">
         Get in touch
       </Link>
-      <p className="text-sm text-subtle">Opens your browser&rsquo;s print dialog — choose &ldquo;Save as PDF&rdquo;.</p>
+      <p className="text-sm text-subtle">Opens your browser&rsquo;s print dialog - choose &ldquo;Save as PDF&rdquo;.</p>
     </div>
   );
 }

@@ -134,3 +134,173 @@ export function SkypeIcon({ className = base }: IconProps) {
     </svg>
   );
 }
+
+/* --------------------------------------------------------------------------
+   Stroked icons. 24x24 grid, 2px stroke, round caps and joins — the same
+   construction as the rest of the set, sized by the `em`-based `base` class.
+-------------------------------------------------------------------------- */
+
+type StrokeProps = IconProps & { children: React.ReactNode };
+
+function Stroke({ className = base, children }: StrokeProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className={className}
+    >
+      {children}
+    </svg>
+  );
+}
+
+export function RocketIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+      <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
+    </Stroke>
+  );
+}
+
+export function ChevronDownIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="m6 9 6 6 6-6" />
+    </Stroke>
+  );
+}
+
+export function MenuIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="M4 6h16M4 12h16M4 18h16" />
+    </Stroke>
+  );
+}
+
+export function CloseIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="M18 6 6 18M6 6l12 12" />
+    </Stroke>
+  );
+}
+
+export function CheckIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="M20 6 9 17l-5-5" />
+    </Stroke>
+  );
+}
+
+export function BriefcaseIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <rect width="20" height="14" x="2" y="7" rx="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    </Stroke>
+  );
+}
+
+export function LayersIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="m12 2 9 5-9 5-9-5 9-5Z" />
+      <path d="m3 12 9 5 9-5" />
+      <path d="m3 17 9 5 9-5" />
+    </Stroke>
+  );
+}
+
+export function TargetIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1" />
+    </Stroke>
+  );
+}
+
+export function CodeIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="m16 18 6-6-6-6" />
+      <path d="m8 6-6 6 6 6" />
+    </Stroke>
+  );
+}
+
+export function AwardIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <circle cx="12" cy="8" r="6" />
+      <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+    </Stroke>
+  );
+}
+
+export function SparkleIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
+      <path d="M12 8a4 4 0 0 0 4 4 4 4 0 0 0-4 4 4 4 0 0 0-4-4 4 4 0 0 0 4-4Z" />
+    </Stroke>
+  );
+}
+
+export function SendIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="m22 2-7 20-4-9-9-4Z" />
+      <path d="M22 2 11 13" />
+    </Stroke>
+  );
+}
+
+export function FacebookIcon({ className = base }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.45 2.91h-2.33V22c4.78-.76 8.44-4.92 8.44-9.94Z" />
+    </svg>
+  );
+}
+
+export function ArrowUpIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="M12 19V5" />
+      <path d="m5 12 7-7 7 7" />
+    </Stroke>
+  );
+}
+
+export function RepoBranchIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <line x1="6" x2="6" y1="3" y2="15" />
+      <circle cx="18" cy="6" r="3" />
+      <circle cx="6" cy="18" r="3" />
+      <path d="M18 9a9 9 0 0 1-9 9" />
+    </Stroke>
+  );
+}
+
+export function GraduationCapIcon({ className }: IconProps) {
+  return (
+    <Stroke className={className}>
+      <path d="M22 9 12 5 2 9l10 4 10-4Z" />
+      <path d="M6 10.6V16c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5.4" />
+      <path d="M22 9v5" />
+    </Stroke>
+  );
+}

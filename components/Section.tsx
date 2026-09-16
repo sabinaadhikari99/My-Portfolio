@@ -1,49 +1,47 @@
+import type { SectionCopy } from "@/content/profile";
 import Reveal from "./Reveal";
 
 type Props = {
   id: string;
-  eyebrow: string;
-  title: string;
-  lead?: string;
+  copy: SectionCopy;
   children: React.ReactNode;
-  surface?: boolean;
 };
 
-export default function Section({
-  id,
-  eyebrow,
-  title,
-  lead,
-  children,
-  surface = false,
-}: Props) {
+/**
+ * Standard section frame: an uppercase eyebrow pill, a heading where one
+ * phrase carries the brand gradient, an optional lead, then the content.
+ *
+ * Every section on the page uses this, which is what keeps the vertical rhythm
+ * and heading scale identical from About all the way to Contact.
+ */
+export default function Section({ id, copy, children }: Props) {
+  const { eyebrow, before, accent, after, lead } = copy;
+
   return (
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={
-        surface
-          ? "border-y border-border bg-card py-24 md:py-32"
-          : "py-24 md:py-32"
-      }
+      className="section-pad shell relative"
     >
-      <div className="shell">
-        <Reveal className="max-w-3xl">
-          <p className="eyebrow">{eyebrow}</p>
-          <h2
-            id={`${id}-heading`}
-            className="mt-4 font-display text-h2 font-bold tracking-tight text-foreground"
-          >
-            {title}
-          </h2>
-          {lead ? (
-            <p className="mt-5 text-lg leading-relaxed text-muted-foreground md:text-xl">
-              {lead}
-            </p>
-          ) : null}
-        </Reveal>
-        <div className="mt-14 md:mt-16">{children}</div>
-      </div>
+      <Reveal className="mb-10 max-w-2xl sm:mb-14">
+        <span className="glass inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+          {eyebrow}
+        </span>
+        <h2
+          id={`${id}-heading`}
+          className="mt-4 font-display text-3xl font-bold leading-tight sm:text-4xl"
+        >
+          {before ? `${before} ` : ""}
+          <span className="gradient-text">{accent}</span>
+          {after ? ` ${after}` : ""}
+        </h2>
+        {lead ? (
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {lead}
+          </p>
+        ) : null}
+      </Reveal>
+      {children}
     </section>
   );
 }

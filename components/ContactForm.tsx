@@ -4,22 +4,20 @@ import { useState } from "react";
 import {
   emailComposeHref,
   emailHref,
-  links,
   whatsappComposeHref,
 } from "@/content/profile";
-import { ArrowIcon } from "./Icons";
+import { SendIcon } from "./Icons";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
 const field =
-  "w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3.5 text-base text-white placeholder:text-gray-400 transition-colors duration-300 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent";
+  "w-full rounded-xl border border-border bg-input px-4 py-3 text-sm transition-colors duration-300 placeholder:text-subtle focus:border-transparent focus:outline-none focus:ring-2 focus:ring-ring";
 
-const selectField = `${field} appearance-none cursor-pointer bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat pr-10`;
+const FALLBACK_SUBJECT = "Hello from your portfolio";
 
-const SUBJECT = "Hello from your portfolio";
-
-function composeBody({ name, email, message }: Record<string, string>) {
-  return `Hi Sabina, I'm ${name} (${email}).\n\n${message}`;
+function composeBody({ name, email, subject, message }: Record<string, string>) {
+  const lead = `Hi Sabina, I'm ${name} (${email}).`;
+  return subject ? `${lead}\n\nRe: ${subject}\n\n${message}` : `${lead}\n\n${message}`;
 }
 
 export default function ContactForm() {
@@ -35,12 +33,15 @@ export default function ContactForm() {
     setStatus("sending");
     setError("");
 
-    const body = composeBody({
-      name: String(data.name ?? ""),
-      email: String(data.email ?? ""),
-      message: String(data.message ?? ""),
-    });
-    const target = whatsappComposeHref(body) ?? emailComposeHref(SUBJECT, body);
+    const name = String(data.name ?? "");
+    const email = String(data.email ?? "");
+    const subject = String(data.subject ?? "").trim();
+    const message = String(data.message ?? "");
+
+    const body = composeBody({ name, email, subject, message });
+    const target =
+      whatsappComposeHref(body) ??
+      emailComposeHref(subject || FALLBACK_SUBJECT, body);
 
     const handOff = () => {
       if (!target) return false;
@@ -53,7 +54,15 @@ export default function ContactForm() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name,
+          email,
+          // The API stores name, email and message only. Folding the subject
+          // into the message keeps it rather than dropping it on the floor,
+          // and avoids a schema migration for one line of text.
+          message: subject ? `Subject: ${subject}\n\n${message}` : message,
+          website: data.website,
+        }),
       });
       const result = await response.json().catch(() => ({}));
 
@@ -85,14 +94,10 @@ export default function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div
-        role="status"
-        className="rounded-2xl border border-white/10 bg-white/5 p-8"
-      >
-        <h3 className="font-display text-2xl font-bold text-white">Message received.</h3>
-        <p className="mt-3 leading-relaxed text-gray-300">
-          Thank you for writing — I&rsquo;ll reply to you at the address you
-          gave.
+      <div role="status" className="glass gradient-border rounded-2xl p-8">
+        <h3 className="font-display text-2xl font-bold">Message received.</h3>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          Thanks - I read everything and reply to all of it.
           {handoff
             ? " WhatsApp should have opened with your message ready to send. If your browser blocked it, use the button below."
             : null}
@@ -104,7 +109,8 @@ export default function ContactForm() {
               href={handoff}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-accent-hover"
+              className="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-soft)] transition-transform duration-300 hover:-translate-y-0.5"
+              style={{ background: "var(--gradient-brand)" }}
             >
               Send on WhatsApp
             </a>
@@ -114,7 +120,7 @@ export default function ContactForm() {
               href={emailHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-accent hover:underline"
+              className="text-sm font-medium text-cyan hover:underline"
             >
               or email me directly
             </a>
@@ -127,7 +133,7 @@ export default function ContactForm() {
             setHandoff(undefined);
             setStatus("idle");
           }}
-          className="mt-6 block text-sm text-gray-400 underline underline-offset-4 hover:text-white"
+          className="mt-6 block text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
         >
           Send another message
         </button>
@@ -138,13 +144,16 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8"
+      className="glass gradient-border flex h-full flex-col rounded-2xl p-5 sm:p-6"
       noValidate
     >
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="mb-2 block text-sm font-medium text-white">
-            Your Name <span className="text-accent">*</span>
+          <label
+            htmlFor="name"
+            className="mb-2 block text-sm font-medium text-muted-foreground"
+          >
+            Name
           </label>
           <input
             id="name"
@@ -153,13 +162,16 @@ export default function ContactForm() {
             required
             autoComplete="name"
             maxLength={120}
-            placeholder="Ex. John Doe"
+            placeholder="Your name"
             className={field}
           />
         </div>
         <div>
-          <label htmlFor="email" className="mb-2 block text-sm font-medium text-white">
-            Email <span className="text-accent">*</span>
+          <label
+            htmlFor="email"
+            className="mb-2 block text-sm font-medium text-muted-foreground"
+          >
+            Email
           </label>
           <input
             id="email"
@@ -168,130 +180,68 @@ export default function ContactForm() {
             required
             autoComplete="email"
             maxLength={200}
-            placeholder="example@gmail.com"
+            placeholder="you@company.com"
             className={field}
           />
         </div>
       </div>
 
-      <div className="mt-5 grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="phone" className="mb-2 block text-sm font-medium text-white">
-            Phone <span className="text-accent">*</span>
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            required
-            autoComplete="tel"
-            maxLength={20}
-            placeholder="Enter Phone Number"
-            className={field}
-          />
-        </div>
-        <div>
-          <label htmlFor="interest" className="mb-2 block text-sm font-medium text-white">
-            I&rsquo;m Interested in <span className="text-accent">*</span>
-          </label>
-          <select
-            id="interest"
-            name="interest"
-            required
-            className={selectField}
-            defaultValue=""
-          >
-            <option value="" disabled>Select</option>
-            <option value="web">Web Development</option>
-            <option value="mobile">Mobile App</option>
-            <option value="design">UI/UX Design</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
+      <div className="mt-4">
+        <label
+          htmlFor="subject"
+          className="mb-2 block text-sm font-medium text-muted-foreground"
+        >
+          Subject
+        </label>
+        <input
+          id="subject"
+          name="subject"
+          type="text"
+          maxLength={160}
+          placeholder="Opportunity, collaboration, project..."
+          className={field}
+        />
       </div>
 
-      <div className="mt-5 grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="budget" className="mb-2 block text-sm font-medium text-white">
-            Budget Range (USD) <span className="text-accent">*</span>
-          </label>
-          <select
-            id="budget"
-            name="budget"
-            required
-            className={selectField}
-            defaultValue=""
-          >
-            <option value="" disabled>Select Range</option>
-            <option value="500-1000">$500 - $1,000</option>
-            <option value="1000-2500">$1,000 - $2,500</option>
-            <option value="2500-5000">$2,500 - $5,000</option>
-            <option value="5000+">$5,000+</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="country" className="mb-2 block text-sm font-medium text-white">
-            Country <span className="text-accent">*</span>
-          </label>
-          <select
-            id="country"
-            name="country"
-            required
-            className={selectField}
-            defaultValue=""
-          >
-            <option value="" disabled>Select Country</option>
-            <option value="NP">Nepal</option>
-            <option value="US">United States</option>
-            <option value="IN">India</option>
-            <option value="UK">United Kingdom</option>
-            <option value="AU">Australia</option>
-            <option value="CA">Canada</option>
-            <option value="DE">Germany</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="mt-5">
-        <label htmlFor="message" className="mb-2 block text-sm font-medium text-white">
-          Your Message <span className="text-accent">*</span>
+      <div className="mt-4 flex flex-1 flex-col">
+        <label
+          htmlFor="message"
+          className="mb-2 block text-sm font-medium text-muted-foreground"
+        >
+          Message
         </label>
         <textarea
           id="message"
           name="message"
           required
-          rows={5}
+          rows={6}
           maxLength={4000}
-          placeholder="Enter here.."
-          className={`${field} resize-y`}
+          placeholder="Tell me a bit about the role or project..."
+          className={`${field} min-h-[8rem] flex-1 resize-y`}
         />
       </div>
 
-      {/* Honeypot */}
+      {/* Honeypot. Real people leave this empty; bots fill everything in. */}
       <div aria-hidden className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
         <label htmlFor="website">Website</label>
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       {error ? (
-        <p role="alert" className="mt-4 text-sm text-accent">
+        <p role="alert" className="mt-4 text-sm text-cyan">
           {error}
         </p>
       ) : null}
 
-      <div className="mt-6">
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="group inline-flex items-center gap-3 rounded-full border-2 border-accent px-7 py-3.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {status === "sending" ? "Sending…" : "Submit"}
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-white transition-colors duration-300 group-hover:bg-white group-hover:text-accent">
-            <ArrowIcon className="h-4 w-4" />
-          </span>
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-soft)] transition-transform duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+        style={{ background: "var(--gradient-brand)" }}
+      >
+        <SendIcon className="h-4 w-4" />
+        {status === "sending" ? "Sending..." : "Send message"}
+      </button>
     </form>
   );
 }
