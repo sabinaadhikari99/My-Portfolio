@@ -113,11 +113,11 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Backend",
-    items: ["Django", "Django REST Framework", "Python", "REST API design", "Blog API", "JWT auth"],
+    items: ["Django", "Django REST Framework", "Python", "Blog API", "JWT auth"],
   },
   {
     title: "Databases",
-    items: ["PostgreSQL (Neon)", "SQLite"],
+    items: ["PostgreSQL", "Neon", "SQLite"],
   },
   {
     title: "AI & data",
@@ -596,4 +596,48 @@ export const heroSkills: HeroSkill[] = [
  */
 export const footer = {
   quote: "Turning Ideas into Impact",
+};
+
+/**
+ * Maps a skill in `skillGroups` to its glyph in content/brand-icons.ts.
+ *
+ * Kept separate from `skillGroups` so `items` stays a plain string list - the
+ * résumé joins it straight into a line of text. A skill with no entry here, or
+ * one whose technology simply has no brand mark (FAISS, "REST API design"),
+ * falls back to a lettermark tile rather than a blank square.
+ */
+export type SkillIcon =
+  /** A slug in content/brand-icons.ts. */
+  | string
+  /** A logo file in public/, for a technology Simple Icons does not carry.
+   *  `color` drives the tile's hover ring and glow. */
+  | { src: string; color: string };
+
+export const skillIcons: Record<string, SkillIcon> = {
+  "Next.js": "nextdotjs",
+  React: "react",
+  TypeScript: "typescript",
+  JavaScript: "javascript",
+  HTML: "html5",
+  CSS: "css",
+  "Tailwind CSS": "tailwindcss",
+  Django: "django",
+  "Django REST Framework": "djangorest",
+  Python: "python",
+  "JWT auth": "jsonwebtokens",
+  "Blog API": { src: "/skills/blog-api.png", color: "#e27642" },
+  PostgreSQL: "postgresql",
+  Neon: "neon",
+  SQLite: "sqlite",
+  "Sentence Transformers": "huggingface",
+  "Gemini API": "googlegemini",
+  "scikit-learn": "scikitlearn",
+  NumPy: "numpy",
+  pandas: "pandas",
+  Git: "git",
+  GitHub: "github",
+  Docker: "docker",
+  Postman: "postman",
+  Swagger: "swagger",
+  Railway: "railway",
 };
