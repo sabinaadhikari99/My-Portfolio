@@ -100,6 +100,8 @@ export default function Hero() {
             </a>
             <a
               href={links.RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="glass gradient-border inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-transform duration-300 hover:-translate-y-0.5"
             >
               <DownloadIcon className="h-4 w-4" />

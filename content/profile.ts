@@ -36,7 +36,7 @@ export const links = {
   FACEBOOK_URL: "https://www.facebook.com/sabina.adhikari.92505956",
   // International format, digits only, no leading "+" — e.g. 9779800000000
   WHATSAPP_NUMBER: "9779806689443",
-  RESUME_URL: "/resume",
+  RESUME_URL: "https://drive.google.com/file/d/1rRKokPWv-ypsZZqt8isiOHgUA3vtbvUR/view?usp=sharing",
 } as const;
 
 export const whatsappHref = links.WHATSAPP_NUMBER

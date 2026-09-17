@@ -24,17 +24,7 @@ const ICONS = {
 export default function About() {
   return (
     <Section id="about" copy={sections.about}>
-      {/* `items-start` matters here: the prose runs to five paragraphs, and
-          without it the cards column would stretch to match and leave each card
-          half-empty. */}
-      {/* The cards take the larger share of the row. At the previous ratio each
-          card sat around 240px, which wrapped "Bachelor of Software Engineering"
-          onto two lines; the prose still has a comfortable measure at this
-          width. */}
       <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.25fr] lg:gap-12">
-        {/* The cards' top edge sits on the grid line, but the first line of
-            text sits below its own half-leading, so the two read as misaligned.
-            Pulling the prose up by that leading squares them off. */}
         <Reveal className="space-y-4 lg:-mt-1.5">
           {about.paragraphs.map((paragraph, i) => (
             <p
@@ -46,38 +36,29 @@ export default function About() {
           ))}
         </Reveal>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="flex flex-col gap-4">
           {aboutCards.map((card, i) => {
             const Icon = ICONS[card.icon];
             const { href } = card;
+            const description = card.lines.join(" · ");
 
             const body = (
-              <>
-                <div className="flex items-start justify-between gap-4">
-                  <span
-                    className="grid size-10 place-items-center rounded-xl text-primary-foreground"
-                    style={{ background: "var(--gradient-brand)" }}
-                  >
-                    <Icon className="h-[18px] w-[18px]" />
-                  </span>
-                  <span className="rounded-full border border-border px-2.5 py-1 text-[11px] text-muted-foreground">
-                    {card.highlight}
-                  </span>
+              <div className="flex items-center gap-4">
+                <span
+                  className="grid size-12 shrink-0 place-items-center rounded-full text-primary-foreground"
+                  style={{ background: "var(--gradient-brand)" }}
+                >
+                  <Icon className="h-5 w-5" />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="font-display text-base font-semibold">
+                    {card.title}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                    {description}
+                  </p>
                 </div>
-                <h3 className="mt-5 font-display text-lg font-semibold">
-                  {card.title}
-                </h3>
-                <ul className="mt-3 space-y-1.5">
-                  {card.lines.map((line) => (
-                    <li
-                      key={line}
-                      className="text-sm leading-relaxed text-muted-foreground"
-                    >
-                      {line}
-                    </li>
-                  ))}
-                </ul>
-              </>
+              </div>
             );
 
             return (
@@ -85,12 +66,12 @@ export default function About() {
                 {href ? (
                   <a
                     href={href}
-                    className="glass gradient-border card-hover group block h-full rounded-2xl p-6"
+                    className="glass gradient-border card-hover group block rounded-2xl p-5"
                   >
                     {body}
                   </a>
                 ) : (
-                  <article className="glass gradient-border card-hover h-full rounded-2xl p-6">
+                  <article className="glass gradient-border card-hover rounded-2xl p-5">
                     {body}
                   </article>
                 )}
