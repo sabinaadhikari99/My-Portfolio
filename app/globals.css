@@ -651,3 +651,24 @@ textarea {
   animation: chip-in 0.5s var(--ease-out-soft) both;
   animation-delay: var(--rise-delay, 0ms);
 }
+
+/* About section image shape */
+.about-image-shape {
+  border-radius: 1.5rem;
+  clip-path: inset(0 round 1.5rem);
+}
+
+/* About section image frame with layered glow */
+.about-image-frame {
+  box-shadow:
+    0 0 0 1px oklch(100% 0 0 / 0.05),
+    0 8px 32px -8px oklch(54.1% 0.245 293 / 0.15),
+    0 20px 60px -16px oklch(55.2% 0.22 264 / 0.2);
+}
+
+.about-image-frame:hover {
+  box-shadow:
+    0 0 0 1px oklch(100% 0 0 / 0.08),
+    0 8px 40px -8px oklch(54.1% 0.245 293 / 0.25),
+    0 24px 70px -16px oklch(55.2% 0.22 264 / 0.3);
+}

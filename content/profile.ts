@@ -86,11 +86,9 @@ export const about = {
   // Sabina's own words, used verbatim. Note that the résumé page renders
   // paragraphs[0] as its summary line.
   paragraphs: [
-    "Great software begins with a simple idea - and the curiosity to turn that idea into something meaningful. That curiosity has shaped my journey as a software engineer at Pokhara University, where I continue to explore, learn, and build digital solutions that combine thoughtful experiences with reliable technology.",
-    "My journey began with Python and Django, grew into building REST APIs with Django REST Framework, and evolved into creating modern, responsive interfaces with Next.js and React. Along the way, I’ve learned that good software isn’t just about writing code - it’s about understanding real problems and building solutions that genuinely work.",
-    "My journey includes SkillSync AI, my college project focused on connecting people with opportunities through AI-powered career and job-matching features. I’ve also contributed to a Multi-Vendor Inventory Management System, working with multi-tenant architecture, inventory and warehouse management, stock transactions, order integration, and data consistency.",
-    "Beyond that, I’ve worked on the Office Management System (OMS), developing client management, real-time team communication, leave management, and permission-based workflows, and on Prakriti Ayurvedic, a full-stack platform combining thoughtful UI, content management, booking, authentication, and backend systems.",
-    "I believe the most meaningful technology is built with both logic and purpose. Every challenge teaches me something new, every project pushes me to grow, and every line of code is a small step toward building something that truly matters.",
+    "I'm a Software Engineering graduate from Pokhara University with hands-on experience in full-stack web development using Django, Django REST Framework, Next.js, React, TypeScript, and Python. I specialize in building scalable, responsive, and user-focused applications that transform real-world problems into practical digital solutions.",
+    "My development journey began with Python and Django, where I developed backend systems, REST APIs, and database-driven applications. Over time, I expanded my expertise into modern frontend development with Next.js and React, gaining experience in authentication, role-based permissions, real-time communication, inventory management, booking systems, and responsive UI design.",
+    "Through academic and professional projects, I have worked on diverse platforms including SkillSync AI, a multi-vendor inventory management system, OMS, and Prakriti Ayurvedic. I am passionate about continuous learning, exploring new technologies, solving complex problems, and building software that is reliable, efficient, and genuinely useful.",
   ],
   // Small stat strip beside the copy. Keep these honest and verifiable.
   facts: [
@@ -447,9 +445,9 @@ export type SectionCopy = {
 
 export const sections: Record<string, SectionCopy> = {
   about: {
-    eyebrow: "About",
-    before: "Engineering with",
-    accent: "intent",
+    eyebrow: "About Me",
+    before: "Building real solutions",
+    accent: "through thoughtful engineering",
   },
   experience: {
     eyebrow: "Experience",
@@ -514,6 +512,8 @@ export type AboutCard = {
   highlight: string;
   /** Makes the whole card a link. */
   href?: string;
+  /** Optional prefix icon for specific lines (e.g., mail icon). */
+  lineIcons?: Record<number, string>;
 };
 
 export const aboutCards: AboutCard[] = [
@@ -521,34 +521,32 @@ export const aboutCards: AboutCard[] = [
     icon: "education",
     title: "Education",
     lines: [
-      "Bachelor of Software Engineering",
-      "Pokhara University",
-      "Diploma in Computer Engineering (9-12)",
-      "Shree Ambika Secondary School",
+      "Bachelor of Software Engineering, Pokhara University",
+      "Diploma in Computer Engineering, Shree Ambika Secondary School",
     ],
     highlight: "Engineering",
   },
   {
     icon: "focus",
     title: "Focus",
-    lines: ["Full-stack web applications", "AI and ML"],
+    lines: ["Full-stack web development with an interest in AI and machine learning."],
     highlight: "Product-first",
   },
   {
     icon: "stack",
-    title: "Core stack",
-    lines: [
-      "Next.js, React, TypeScript",
-      "Django, DRF, Python",
-      "PostgreSQL, Neon",
-    ],
+    title: "Core Stack",
+    lines: ["Next.js, React, TypeScript, Django, DRF, Python, PostgreSQL, Neon"],
     highlight: "End to end",
   },
   {
     icon: "availability",
     title: "Currently",
-    lines: [person.availability, "Fastest reply: email or WhatsApp"],
+    lines: [
+      "Open to software engineering roles and internships.",
+      "Available via email or WhatsApp.",
+    ],
     highlight: "Available",
+    lineIcons: { 1: "✉" },
   },
 ];
 
