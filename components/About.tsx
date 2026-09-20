@@ -33,22 +33,22 @@ const WHAT_I_BUILD = [
 export default function About() {
   return (
     <Section id="about" copy={sections.about}>
-      <div className="grid items-start gap-8 lg:grid-cols-[3fr_5fr_4fr] lg:gap-6 xl:gap-10">
+      <div className="grid items-stretch gap-8 lg:grid-cols-[3fr_5fr_4fr] lg:gap-6 xl:gap-10">
         {/* Left — Profile image */}
-        <Reveal className="relative hidden lg:block" delay={0}>
-          <div className="about-image-wrapper sticky mt-24 self-start">
+        <Reveal className="relative hidden h-full lg:block" delay={0}>
+          <div className="about-image-wrapper sticky flex h-full flex-col justify-start">
             {/* Outer offset frame */}
             <div className="absolute -inset-2 rounded-[2rem] border border-indigo-500/20" />
             <div className="absolute -inset-1 rounded-[1.85rem] border border-white/[0.06]" />
 
             {/* Main image container */}
-            <div className="about-image-frame group relative overflow-hidden rounded-[1.75rem] border border-white/10 transition-all duration-300 hover:border-white/20">
+            <div className="about-image-frame group relative flex min-h-0 flex-1 overflow-hidden rounded-[1.75rem] border border-white/10 transition-all duration-300 hover:border-white/20">
               <Image
                 src="/final-about.jpg"
                 alt="Sabina Adhikari"
                 width={400}
                 height={520}
-                className="aspect-[4/5] h-auto w-full object-cover"
+                className="h-full w-full object-cover"
                 priority
               />
               {/* Subtle inner shadow */}
@@ -128,7 +128,7 @@ export default function About() {
             {about.paragraphs.map((paragraph, i) => (
               <p
                 key={i}
-                className="text-justify text-sm leading-relaxed text-muted-foreground sm:text-base"
+                className="text-center text-sm leading-[14pt] text-muted-foreground sm:text-base"
               >
                 {paragraph}
               </p>
@@ -136,11 +136,11 @@ export default function About() {
           </div>
 
           {/* What I Build */}
-          <div className="pt-2">
+          <div className="pt-[13pt] text-center">
             <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-subtle">
               What I Build
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-center gap-2">
               {WHAT_I_BUILD.map((item) => (
                 <span
                   key={item.label}

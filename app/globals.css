@@ -214,8 +214,8 @@ textarea {
 @utility glass {
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   backdrop-filter: blur(18px) saturate(140%);
-  background: oklch(100% 0 0 / 0.06);
-  border: 1px solid oklch(100% 0 0 / 0.1);
+  background: oklch(100% 0 0 / 0.03);
+  border: 1px solid oklch(100% 0 0 / 0.06);
 }
 
 /* Heavier frost with an opaque tint — for the nav and footer, which sit over
