@@ -10,7 +10,7 @@ export const person = {
   // Short role label shown in the nav, metadata and footer.
   role: "Software Engineer",
   // Hero headline supporting line. Keep it to one clear sentence.
-  tagline: "I build web applications and AI-assisted tools.",
+  tagline: "I build web applications and intelligent digital solutions.",
   location: "Pokhara, Nepal",
   // 2-3 sentences shown under the hero headline.
   intro:
@@ -86,7 +86,7 @@ export const about = {
   // Sabina's own words, used verbatim. Note that the résumé page renders
   // paragraphs[0] as its summary line.
   paragraphs: [
-    "I'm a Software Engineering graduate from Pokhara University with hands-on experience in full-stack web development using Django, Django REST Framework, Next.js, React, TypeScript, and Python. I specialize in building scalable, responsive, and user-focused applications that transform real-world problems into practical digital solutions.",
+    "I'm a final-year Software Engineering student at Pokhara University with hands-on experience in full-stack web development using Django, Django REST Framework, Next.js, React, TypeScript, and Python. I specialize in building scalable, responsive, and user-focused applications that transform real-world problems into practical digital solutions.",
     "My development journey began with Python and Django, where I developed backend systems, REST APIs, and database-driven applications. Over time, I expanded my expertise into modern frontend development with Next.js and React, gaining experience in authentication, role-based permissions, real-time communication, inventory management, booking systems, and responsive UI design.",
     "Through academic and professional projects, I have worked on diverse platforms including SkillSync AI, a multi-vendor inventory management system, OMS, and Prakriti Ayurvedic. I am passionate about continuous learning, exploring new technologies, solving complex problems, and building software that is reliable, efficient, and genuinely useful.",
   ],
