@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import { about, aboutCards, sections } from "@/content/profile";
 import Reveal from "./Reveal";
 import Section from "./Section";
@@ -35,21 +35,18 @@ export default function About() {
     <Section id="about" copy={sections.about}>
       <div className="grid items-stretch gap-8 lg:grid-cols-[3fr_5fr_4fr] lg:gap-6 xl:gap-10">
         {/* Left — Profile image */}
-        <Reveal className="relative hidden h-full lg:block" delay={0}>
-          <div className="about-image-wrapper sticky flex h-full flex-col justify-start">
+        <Reveal className="relative hidden lg:block" delay={0}>
+          <div className="about-image-wrapper sticky top-8 mx-auto w-full max-w-[260px]">
             {/* Outer offset frame */}
             <div className="absolute -inset-2 rounded-[2rem] border border-indigo-500/20" />
             <div className="absolute -inset-1 rounded-[1.85rem] border border-white/[0.06]" />
 
             {/* Main image container */}
-            <div className="about-image-frame group relative flex min-h-0 flex-1 overflow-hidden rounded-[1.75rem] border border-white/10 transition-all duration-300 hover:border-white/20">
-              <Image
-                src="/final-about.jpg"
+            <div className="about-image-frame group relative aspect-[3/4] overflow-hidden rounded-[1.75rem] border border-white/10 transition-all duration-300 hover:border-white/20">
+              <img
+                src="/sabina-adhikari.jpg"
                 alt="Sabina Adhikari"
-                width={400}
-                height={520}
-                className="h-full w-full object-cover"
-                priority
+                className="h-full w-full object-cover object-center"
               />
               {/* Subtle inner shadow */}
               <div
@@ -92,13 +89,10 @@ export default function About() {
 
               {/* Main image container */}
               <div className="about-image-frame group relative overflow-hidden rounded-[1.5rem] border border-white/10 transition-all duration-300 hover:border-white/20">
-                <Image
-                  src="/final-about.jpg"
+                <img
+                  src="/sabina-adhikari.jpg"
                   alt="Sabina Adhikari"
-                  width={400}
-                  height={520}
                   className="aspect-[4/5] h-auto w-full object-cover"
-                  priority
                 />
                 {/* Subtle inner shadow */}
                 <div
